@@ -16,7 +16,7 @@ public class EventResponseSerializer implements JsonSerializer<EventResponse> {
     @Override
     public JsonElement serialize(EventResponse src, Type typeOfSrc, JsonSerializationContext context) {
         final JsonObject jsonObject = new JsonObject();
-        ;
+
         jsonObject.add("data", context.serialize(src.getData()));
         return jsonObject;
     }
