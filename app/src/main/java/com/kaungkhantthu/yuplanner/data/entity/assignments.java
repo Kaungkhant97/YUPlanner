@@ -1,4 +1,4 @@
-package com.kaungkhantthu.yuplanner.data;
+package com.kaungkhantthu.yuplanner.data.entity;
 
 import java.util.Date;
 

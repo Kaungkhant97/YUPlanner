@@ -1,4 +1,4 @@
-package com.kaungkhantthu.yuplanner.data.api;
+package com.kaungkhantthu.yuplanner.network.api;
 
 /**
  * Created by hhtet on 3/17/16.

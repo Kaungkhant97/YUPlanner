@@ -1,4 +1,4 @@
-package com.kaungkhantthu.yuplanner.data.api;
+package com.kaungkhantthu.yuplanner.network.api;
 
 
 
@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 
 /**
@@ -22,6 +23,9 @@ public interface RetrofitService {
 
   @POST(APIConfig.EVENT_LIST)
   Call<Event> postEvent(@Body Event e);
+
+  @POST(APIConfig.EVENT_LIST)
+  Call<Event> getEventbetween(@Query("startDate") String startDate,@Query("endDate") String endDate);
 
 
 

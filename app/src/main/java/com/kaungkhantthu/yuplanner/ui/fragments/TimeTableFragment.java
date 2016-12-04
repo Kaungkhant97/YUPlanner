@@ -1,4 +1,4 @@
-package com.kaungkhantthu.yuplanner.fragments;
+package com.kaungkhantthu.yuplanner.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.kaungkhantthu.yuplanner.data.api;
+package com.kaungkhantthu.yuplanner.network.api;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -34,7 +34,7 @@ public class RetrofitClient {
         httpClient = new OkHttpClient().newBuilder()
                 .readTimeout(15, TimeUnit.SECONDS)
                 .connectTimeout(15, TimeUnit.SECONDS)
-
+                .addInterceptor(logging)
                 .build();
 
 
