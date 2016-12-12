@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         setupViewPager();
         setupCalendarView();
         SubjectModelImpl subjectModel = SubjectModelImpl.getInstance();
-        subjectModel.getSubjectList("a","2011","",new SubjectModelImpl.Callback() {
+        subjectModel.getSubjectList("CS","4","",new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {
             test(sbjs);
@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        Log.e("onDateSelected: ", "date is " + date.getCalendar().get(Calendar.DAY_OF_WEEK) + "");
         DateChangeNotifier.getInstance().notifyAllView(date.getCalendar());
         DateChangeNotifier.getInstance().setcurrentSelectedDate(date.getCalendar());
 

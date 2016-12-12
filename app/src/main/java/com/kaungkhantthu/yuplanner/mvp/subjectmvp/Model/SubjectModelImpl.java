@@ -67,7 +67,7 @@ public class SubjectModelImpl implements SubjectModel {
 
     @Override
     public void getSubjectList(String major, String year, String mclass, final Callback c) {
-        RetrofitClient.getInstance().getService().getSubjectList(major,year,mclass).enqueue(new retrofit2.Callback<mSubjectResponse>() {
+        RetrofitClient.getInstance().getService().getSubjectList(major, year, mclass).enqueue(new retrofit2.Callback<mSubjectResponse>() {
             @Override
             public void onResponse(Call<mSubjectResponse> call, Response<mSubjectResponse> response) {
                 if (response.body() != null) {
@@ -107,13 +107,27 @@ public class SubjectModelImpl implements SubjectModel {
 
     @Override
     public List<Subject> getSubjectListFromCache(int day) {
-        Log.d(TAG, "getSubjectListFromCache: "+day);
-        List<Subject> subjectList;
+        Log.d(TAG, "getSubjectListFromCache: " + day);
+        List<Subject> subjectList = new RealmList<>();
         realm.beginTransaction();
-        RealmResults<Subject> realmSubjectlist = realm.where(Subject.class).equalTo("timetable.day", day).findAll();
-        subjectList =realm.copyFromRealm(realmSubjectlist);
+        for (int i = 0; i < 7; i++) {
+            Subject s = getsubjectForperiod(day, i);
+            if (s != null) {
+                subjectList.add(s);
+            }
+        }
+       // RealmResults<Subject> realmSubjectlist = realm.where(Subject.class).equalTo("timetable.day", day).findAll();
+        subjectList = realm.copyFromRealm(subjectList);
         realm.commitTransaction();
         return subjectList;
+    }
+
+    private Subject getsubjectForperiod(int day, int period) {
+        Subject subject = realm.where(Subject.class)
+                .equalTo("timetable.day", day)
+                .equalTo("timetable.period.p", period)
+                .findFirst();
+        return subject;
     }
 
 

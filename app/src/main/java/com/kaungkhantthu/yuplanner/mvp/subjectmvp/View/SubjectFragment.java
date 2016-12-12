@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
     private void initRecycler() {
         recyler_subjects.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SubjectAdapter(new ArrayList<Subject>());
+        recyler_subjects.setAdapter(adapter);
 
     }
 
@@ -58,11 +60,13 @@ public class SubjectFragment extends Fragment implements SubjectView {
     @Override
     public void onDateChange(Calendar c) {
 
+        subjectPresenter.onDateChange(c);
     }
 
     @Override
     public void showsubjects(List<Subject> subjectList) {
-
+        adapter.clearSubjects();
+        adapter.addallSubjects(subjectList);
     }
 
     @Override

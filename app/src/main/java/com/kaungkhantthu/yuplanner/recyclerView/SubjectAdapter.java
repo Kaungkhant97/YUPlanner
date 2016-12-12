@@ -38,7 +38,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
     @Override
     public SubjectAdapter.SubjectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_event, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_subject, parent, false);
         this.context = parent.getContext();
         return new SubjectViewHolder(v);
     }
@@ -61,11 +61,14 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
 
     public class SubjectViewHolder extends RecyclerView.ViewHolder {
+        private TextView txt_sbjname;
         public SubjectViewHolder(View itemView) {
             super(itemView);
+            txt_sbjname = (TextView) itemView.findViewById(R.id.txt_sbjname);
         }
 
         public void bindData(Subject subjects, Context context) {
+            txt_sbjname.setText(subjects.getSubjectId());
         }
     }
 }

@@ -14,6 +14,10 @@ public class Timetable extends RealmObject{
     @SerializedName("day")
     @Expose
     private Integer day;
+
+    @SerializedName("tutorial")
+    @Expose
+    private boolean tutorial;
     @SerializedName("_id")
     @Expose
     private String id;
@@ -24,10 +28,19 @@ public class Timetable extends RealmObject{
     public Timetable() {
     }
 
-    public Timetable(Integer day, String id, RealmList<period>  period) {
+    public Timetable(Integer day, String id, RealmList<period>  period,boolean tutorial) {
         this.day = day;
         this.id = id;
         this.period = period;
+        this.tutorial = tutorial;
+    }
+
+    public boolean isTutorial() {
+        return tutorial;
+    }
+
+    public void setTutorial(boolean tutorial) {
+        this.tutorial = tutorial;
     }
 
     /**
