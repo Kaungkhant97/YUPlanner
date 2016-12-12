@@ -2,9 +2,12 @@ package com.kaungkhantthu.yuplanner.utils;
 
 import android.util.Log;
 
+import com.kaungkhantthu.yuplanner.data.entity.Subject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by kaungkhantthu on 12/4/16.
@@ -12,6 +15,7 @@ import java.util.Date;
 
 public class Utils {
     private static final String ISOFORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    private static HashMap<Object, Object> periodTimeMap;
 
     public static String formatDate(Date d) {
 
@@ -32,6 +36,31 @@ public class Utils {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = format.format(d);
         return date;
+    }
+
+    public static String periodToTimeCoverter(Subject prevsubject, Subject subject) {
+        initPeriodTimeMap();
+        int mperiod;
+
+        if (subject.equals(prevsubject)) {
+            mperiod = subject.getTimetable().get(0).getPeriod().get(1).getP();
+        } else {
+            mperiod = subject.getTimetable().get(0).getPeriod().get(0).getP();
+        }
+        String time = (String) periodTimeMap.get(mperiod);
+        return time;
+
+    }
+
+    private static void initPeriodTimeMap() {
+        periodTimeMap = new HashMap<>();
+        periodTimeMap.put(0, "9:00-10:00");
+        periodTimeMap.put(1, "10:00-11:00");
+        periodTimeMap.put(2, "11:00-12:00");
+        periodTimeMap.put(3, "12:30-1:30");
+        periodTimeMap.put(4, "1:30-2:30");
+        periodTimeMap.put(5, "2:30-3:30");
+        periodTimeMap.put(6, "3:30-4:30");
     }
 
 }

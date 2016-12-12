@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.recyclerView.EventAdapter;
@@ -29,12 +30,14 @@ public class EventFragment extends Fragment implements EventView {
     private ArrayList<Event> eventArrayList;
     private EventAdapter adapter;
     private EventPresenterImpl eventPresenter;
+    private FrameLayout errorlayout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_events, container, false);
         recycler_event = (RecyclerView) v.findViewById(R.id.recycler_event);
+        errorlayout = (FrameLayout) v.findViewById(R.id.errorLayout);
         initRecycler();
         init();
         return v;
@@ -56,19 +59,22 @@ public class EventFragment extends Fragment implements EventView {
 
     @Override
     public void onDateChange(Calendar c) {
-        Log.e("onDateChange: ", c + "");
+
         eventPresenter.onDateChange(c);
     }
 
     @Override
     public void showEvent(List<Event> eventList) {
-
+        errorlayout.setVisibility(View.GONE);
+        recycler_event.setVisibility(View.VISIBLE);
         adapter.clearEvents();
         adapter.addallEvents(eventList);
     }
 
     @Override
     public void showErrorView() {
-
+        Log.e( "showErrorView: ", "error in event");
+        errorlayout.setVisibility(View.VISIBLE);
+        recycler_event.setVisibility(View.GONE);
     }
 }
