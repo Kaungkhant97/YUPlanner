@@ -117,6 +117,13 @@ public class SubjectModelImpl implements SubjectModel {
         return subjectList;
     }
 
+    @Override
+    public void clearSubject() {
+        Realm.getDefaultInstance().beginTransaction();
+        Realm.getDefaultInstance().where(Subject.class).findAll().deleteAllFromRealm();
+        Realm.getDefaultInstance().commitTransaction();
+    }
+
     private Subject getsubjectForperiod(int day, int period) {
         Subject subject = realm.where(Subject.class)
                 .equalTo("timetable.day", day)

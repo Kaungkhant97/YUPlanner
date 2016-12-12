@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.realm.RealmList;
 import retrofit2.http.Path;
 
 /**
@@ -122,5 +123,22 @@ public class SubjectPresenterImpl implements SubjectPresenter {
             }
         }
         return templist;
+    }
+
+    public void requestsubjects() {
+        subjectModel.getSubjectList("CS", "4", "", new SubjectModelImpl.Callback() {
+            @Override
+            public void onSuccess(RealmList<Subject> sbjs) {
+                subjectModel.clearSubject();
+                subjectModel.saveSubject(sbjs);
+                subjectView.showsubjects(sbjs);
+
+            }
+
+            @Override
+            public void onError() {
+                subjectView.showErrorView();
+            }
+        });
     }
 }

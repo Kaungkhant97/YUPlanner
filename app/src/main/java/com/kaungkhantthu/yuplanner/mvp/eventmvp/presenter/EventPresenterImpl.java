@@ -9,6 +9,8 @@ import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 import java.util.Calendar;
 import java.util.List;
 
+import io.realm.RealmList;
+
 /**
  * Created by kaungkhantthu on 12/4/16.
  */
@@ -53,5 +55,21 @@ public class EventPresenterImpl implements EventPresenter {
         }else{
             eventView.showEvent(e);
         }
+    }
+
+    public void requestEvents() {
+        eventModel.getAllEventFromServer(new EventModelImpl.Callback() {
+            @Override
+            public void onSuccess(RealmList<Event> events) {
+                eventModel.clearEvents();
+                eventModel.saveEvent(events);
+                eventView.showEvent(events);
+            }
+
+            @Override
+            public void onError() {
+                eventView.showErrorView();
+            }
+        });
     }
 }

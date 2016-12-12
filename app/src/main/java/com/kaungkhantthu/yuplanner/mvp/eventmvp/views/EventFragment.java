@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.kaungkhantthu.yuplanner.R;
@@ -31,6 +32,7 @@ public class EventFragment extends Fragment implements EventView {
     private EventAdapter adapter;
     private EventPresenterImpl eventPresenter;
     private FrameLayout errorlayout;
+    private Button errorbtn;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class EventFragment extends Fragment implements EventView {
         View v = inflater.inflate(R.layout.fragment_events, container, false);
         recycler_event = (RecyclerView) v.findViewById(R.id.recycler_event);
         errorlayout = (FrameLayout) v.findViewById(R.id.errorLayout);
+        errorbtn = (Button) v.findViewById(R.id.btn_error);
         initRecycler();
         init();
         return v;
@@ -76,5 +79,11 @@ public class EventFragment extends Fragment implements EventView {
         Log.e( "showErrorView: ", "error in event");
         errorlayout.setVisibility(View.VISIBLE);
         recycler_event.setVisibility(View.GONE);
+        errorbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eventPresenter.requestEvents();
+            }
+        });
     }
 }

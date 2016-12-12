@@ -67,31 +67,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         setupToolbar();
         setupViewPager();
         setupCalendarView();
-        SubjectModelImpl subjectModel = SubjectModelImpl.getInstance();
-        subjectModel.getSubjectList("CS", "4", "", new SubjectModelImpl.Callback() {
-            @Override
-            public void onSuccess(RealmList<Subject> sbjs) {
-                test(sbjs);
 
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
 
 
     }
 
-    private void test(RealmList<Subject> sbjs) {
-        Toast.makeText(MainActivity.this, "day is" + sbjs.get(0).getTimetable().get(0).getDay() + "period is" + sbjs.get(0).getTimetable().get(0).getPeriod().get(0).getP(), Toast.LENGTH_SHORT).show();
-        Log.e("onSuccess: ", "day is" + sbjs.get(0).getTimetable().get(0).getDay() + "period is" + sbjs.get(0).getTimetable().get(0).getPeriod().get(0).getP());
-        Realm.getDefaultInstance().beginTransaction();
-        Realm.getDefaultInstance().where(Subject.class).findAll().deleteAllFromRealm();
-        Realm.getDefaultInstance().copyToRealm(sbjs);
-        Realm.getDefaultInstance().commitTransaction();
-    }
+
 
     private void setupCalendarView() {
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);

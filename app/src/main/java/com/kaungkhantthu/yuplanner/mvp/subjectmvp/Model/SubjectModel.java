@@ -16,6 +16,7 @@ public interface SubjectModel {
     void getSubjectList(String major,String year,String mclass,SubjectModelImpl.Callback c);
     void getSubjectList(String major,String year,String mclass,String day,SubjectModelImpl.Callback c);
     List<Subject> getSubjectListFromCache(int day);
+    void clearSubject();
 
 
 }

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
@@ -35,13 +37,16 @@ public class SubjectFragment extends Fragment implements SubjectView {
     private RecyclerView recyler_subjects;
     private SubjectPresenterImpl subjectPresenter;
     private SubjectAdapter adapter;
+    private FrameLayout errorlayout;
+    private Button errorbtn;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timetable, container, false);
         recyler_subjects = (RecyclerView) view.findViewById(R.id.recycler_subjects);
-
+        errorlayout = (FrameLayout) view.findViewById(R.id.errorLayout);
+        errorbtn = (Button) view.findViewById(R.id.btn_error);
         initRecycler();
         init();
         return view;
@@ -70,6 +75,8 @@ public class SubjectFragment extends Fragment implements SubjectView {
 
     @Override
     public void showsubjects(List<Subject> subjectList) {
+        errorlayout.setVisibility(View.GONE);
+        recyler_subjects.setVisibility(View.VISIBLE);
         adapter.clearSubjects();
         adapter.addallSubjects(subjectList);
 
@@ -77,6 +84,14 @@ public class SubjectFragment extends Fragment implements SubjectView {
 
     @Override
     public void showErrorView() {
-
+        Log.e( "showErrorView: ", "error in event");
+        errorlayout.setVisibility(View.VISIBLE);
+        recyler_subjects.setVisibility(View.GONE);
+        errorbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subjectPresenter.requestsubjects();
+            }
+        });
     }
 }

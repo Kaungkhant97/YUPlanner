@@ -1,8 +1,10 @@
 package com.kaungkhantthu.yuplanner.mvp.mainmvp;
 
 import com.kaungkhantthu.yuplanner.data.entity.Event;
+import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModel;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
+import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 
 import java.text.ParseException;
 import java.util.List;
@@ -19,12 +21,14 @@ public class MainPresenterImpl implements MainPresenter {
     private static MainPresenter mainPresenter;
     private static MainView mainview;
     private EventModel eventModel;
+    private SubjectModelImpl subjectModel;
 
     private MainPresenterImpl() {
     }
-    public static MainPresenter getInstance(MainView v){
 
-        if(mainPresenter == null){
+    public static MainPresenter getInstance(MainView v) {
+
+        if (mainPresenter == null) {
             mainPresenter = new MainPresenterImpl();
             mainview = v;
         }
@@ -37,7 +41,7 @@ public class MainPresenterImpl implements MainPresenter {
         this.eventModel = EventModelImpl.getInstance();
 
         List<Event> e = Realm.getDefaultInstance().copyFromRealm(eventModel.getAllEventFromCache());
-        if(e != null){
+        if (e != null) {
 
             try {
                 mainview.BindToCalendar(e);
@@ -46,8 +50,27 @@ public class MainPresenterImpl implements MainPresenter {
             }
         }
 
+        this.subjectModel = SubjectModelImpl.getInstance();
+        requestSubjectFromServer();
+
         requestEventsFromServer();
 
+    }
+
+    private void requestSubjectFromServer() {
+        subjectModel.getSubjectList("CS", "4", "", new SubjectModelImpl.Callback() {
+            @Override
+            public void onSuccess(RealmList<Subject> sbjs) {
+                subjectModel.clearSubject();
+                subjectModel.saveSubject(sbjs);
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 
     private void requestEventsFromServer() {
