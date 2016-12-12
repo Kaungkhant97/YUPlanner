@@ -41,11 +41,14 @@ public class Utils {
     public static String periodToTimeCoverter(Subject prevsubject, Subject subject) {
         initPeriodTimeMap();
         int mperiod;
-
-        if (subject.equals(prevsubject)) {
-            mperiod = subject.getTimetable().get(0).getPeriod().get(1).getP();
-        } else {
+        if (prevsubject ==  null){
             mperiod = subject.getTimetable().get(0).getPeriod().get(0).getP();
+        }else {
+            if (subject.equals(prevsubject)) {
+                mperiod = subject.getTimetable().get(0).getPeriod().get(1).getP();
+            } else {
+                mperiod = subject.getTimetable().get(0).getPeriod().get(0).getP();
+            }
         }
         String time = (String) periodTimeMap.get(mperiod);
         return time;
