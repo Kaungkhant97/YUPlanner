@@ -82,6 +82,7 @@ public class EventFragment extends Fragment implements EventView {
         errorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e( "onClick: ", "click"+"");
                 eventPresenter.requestEvents();
             }
         });

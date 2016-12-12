@@ -22,12 +22,14 @@ import com.kaungkhantthu.yuplanner.utils.Utils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -49,12 +51,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     }
 
-    private void setTextTitle() {
-        String month = DateChangeNotifier.getInstance().getcurrentSelectedDate().get(Calendar.MONTH) + "";
-        String year = DateChangeNotifier.getInstance().getcurrentSelectedDate().get(Calendar.YEAR) + "";
-        String date = month + " " + year;
-        getSupportActionBar().setTitle(date);
-    }
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         calendarView.setSelectedDate(Calendar.getInstance().getTime());
         calendarView.setOnDateChangedListener(this);
         calendarView.setSelectedDate(Calendar.getInstance().getTime());
-
+        calendarView.setTopbarVisible(false);
         this.onDateSelected(calendarView, new CalendarDay(Calendar.getInstance()), true);
 
     }
@@ -121,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         DateChangeNotifier.getInstance().notifyAllView(date.getCalendar());
         DateChangeNotifier.getInstance().setcurrentSelectedDate(date.getCalendar());
         mainpresenter.onDateChange(date.getCalendar());
+        String month = date.getCalendar().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        getSupportActionBar().setTitle(month+" "+ date.getCalendar().get(Calendar.DAY_OF_MONTH));
         //setTextTitle();
 
     }
@@ -145,14 +143,14 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     @Override
     public void showeventtab() {
-        if(tabLayout.getTabCount() != 3){
+        if (tabLayout.getTabCount() != 3) {
             tabLayout.addTab(tabLayout.newTab().setText("Event"));
         }
     }
 
     @Override
     public void hideventtab() {
-        if (tabLayout.getTabCount() == 3){
+        if (tabLayout.getTabCount() == 3) {
             tabLayout.removeTabAt(2);
         }
     }
