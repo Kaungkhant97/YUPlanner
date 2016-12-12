@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     ViewPager viewPager;
     MaterialCalendarView calendarView;
     private MainPresenter mainpresenter;
+    private TabPagerAdapter pageradapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         setupCalendarView();
 
 
-
     }
-
 
 
     private void setupCalendarView() {
@@ -94,8 +93,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         tabLayout.addTab(tabLayout.newTab().setText("Assignment"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
         tabLayout.addTab(tabLayout.newTab().setText("Event"));
+        pageradapter = new TabPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pageradapter);
 
-        viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager()));
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         DateChangeNotifier.getInstance().notifyAllView(date.getCalendar());
         DateChangeNotifier.getInstance().setcurrentSelectedDate(date.getCalendar());
+        mainpresenter.onDateChange(date.getCalendar());
         //setTextTitle();
 
     }
@@ -140,5 +141,19 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     @Override
     public void showSnackBar(String s) {
 
+    }
+
+    @Override
+    public void showeventtab() {
+        if(tabLayout.getTabCount() != 3){
+            tabLayout.addTab(tabLayout.newTab().setText("Event"));
+        }
+    }
+
+    @Override
+    public void hideventtab() {
+        if (tabLayout.getTabCount() == 3){
+            tabLayout.removeTabAt(2);
+        }
     }
 }

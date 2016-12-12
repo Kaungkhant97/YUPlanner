@@ -7,6 +7,7 @@ import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
 
 import io.realm.Realm;
@@ -35,6 +36,16 @@ public class MainPresenterImpl implements MainPresenter {
         return mainPresenter;
     }
 
+
+    @Override
+    public void onDateChange(Calendar c) {
+        List<Event> eventlist = eventModel.getEventsFor(c.getTime());
+        if(eventlist.size() == 0){
+            mainview.hideventtab();
+        }else{
+            mainview.showeventtab();
+        }
+    }
 
     @Override
     public void init() {
