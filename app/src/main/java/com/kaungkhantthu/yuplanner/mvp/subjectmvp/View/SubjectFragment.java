@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
+import com.kaungkhantthu.yuplanner.data.entity.Timetable;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.presenter.EventPresenterImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectView;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter.SubjectPresenterImpl;
@@ -21,6 +22,9 @@ import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by kaungkhantthu on 11/29/16.
@@ -60,6 +64,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
     @Override
     public void onDateChange(Calendar c) {
 
+
         subjectPresenter.onDateChange(c);
     }
 
@@ -67,6 +72,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
     public void showsubjects(List<Subject> subjectList) {
         adapter.clearSubjects();
         adapter.addallSubjects(subjectList);
+
     }
 
     @Override

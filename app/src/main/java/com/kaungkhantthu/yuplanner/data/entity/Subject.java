@@ -61,6 +61,24 @@ public class Subject extends RealmObject{
         this.mtype = mtype;
     }
 
+    public Subject(Subject subject) {
+        this.id = subject.getId();
+        this.major = subject.getMajor();
+        this.year = subject.getYear();
+        this.subjectname = subject.getSubjectname();
+        this.teachername = subject.getTeachername();
+        this.subjectId = subject.getSubjectId();
+        this.v = subject.getV();
+        this.timetable = new RealmList<>();
+        for (Timetable t :subject.getTimetable()){
+            timetable.add(t);
+        }
+
+        this.description = subject.getDescription();
+        this._class = subject.getClass_();
+        this.mtype = subject.getMtype();
+    }
+
     /**
      * 
      * @return

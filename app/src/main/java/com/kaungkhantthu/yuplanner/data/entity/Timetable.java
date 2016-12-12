@@ -35,6 +35,15 @@ public class Timetable extends RealmObject{
         this.tutorial = tutorial;
     }
 
+    public Timetable(Timetable t) {
+        this.day = t.getDay();
+        this.id = t.getId();
+        this.period = t.getPeriod();
+        this.tutorial = t.isTutorial();
+
+    }
+
+
     public boolean isTutorial() {
         return tutorial;
     }

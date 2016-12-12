@@ -1,16 +1,21 @@
 package com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter;
 
+import android.util.Log;
+
 import com.kaungkhantthu.yuplanner.data.entity.Event;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.data.entity.Timetable;
-import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
+import com.kaungkhantthu.yuplanner.data.entity.period;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModel;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectView;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.http.Path;
 
 /**
  * Created by kaungkhantthu on 12/12/16.
@@ -36,9 +41,9 @@ public class SubjectPresenterImpl implements SubjectPresenter {
     public void init() {
         this.subjectModel = SubjectModelImpl.getInstance();
         Calendar calendar = DateChangeNotifier.getInstance().getcurrentSelectedDate();
-
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
         List<Subject> subjectList = subjectModel.getSubjectListFromCache(calendar.get(Calendar.DAY_OF_WEEK));
-
+        subjectList = formatList(subjectList, day);
         if (subjectList == null) {
             subjectView.showErrorView();
 
@@ -53,7 +58,7 @@ public class SubjectPresenterImpl implements SubjectPresenter {
         int day = c.get(Calendar.DAY_OF_WEEK);
         List<Subject> subjects = subjectModel.getSubjectListFromCache(day);
 
-        //subjects = formatList(subjects, day);;
+        subjects = formatList(subjects, day);
 
         if (subjects == null) {
             subjectView.showErrorView();
@@ -64,26 +69,58 @@ public class SubjectPresenterImpl implements SubjectPresenter {
 
     private List<Subject> formatList(List<Subject> subjects, int day) {
         subjects = removeUnecessaryDays(subjects, day);
+
         subjects = sortsubjectByperiod(subjects);
-        return null;
+        return subjects;
     }
 
     private List<Subject> sortsubjectByperiod(List<Subject> subjects) {
+        ArrayList<Subject> msubjectlist = new ArrayList<Subject>();
 
+        int count = 0;
+        for (int i = 0; i < 7; i++) {
+            Subject s = getperoid(subjects, i);
+            if (s != null) {
+                msubjectlist.add(s);
+            }
+        }
 
-        return null;
+        return msubjectlist;
+    }
+
+    private Subject getperoid(List<Subject> subjects, int i) {
+        Subject rightsubject = null;
+        for (Subject s : subjects) {
+            for (Timetable t : s.getTimetable()) {
+                for (period per : t.getPeriod()) {
+                    if (per.getP() == i) {
+                        rightsubject = s;
+                        break;
+                    }
+                }
+            }
+        }
+        return rightsubject;
     }
 
 
     private List<Subject> removeUnecessaryDays(List<Subject> subjects, int day) {
+        ArrayList<Subject> templist = new ArrayList<>();
+       for(int g=0;g<subjects.size();g++){
+           templist.add(new Subject(subjects.get(g)));
+       }
 
-        for (Subject s : subjects) {
-            for (Timetable timetable : s.getTimetable()) {
-                if (timetable.getDay() != day) {
-                    s.getTimetable().remove(timetable);
+        for (int i=0;i<subjects.size();i++) {
+            List<Timetable> timetablelist = subjects.get(i).getTimetable();
+           int size = timetablelist.size();
+            for (int j=0;j<size;j++) {
+                if (timetablelist.get(j).getDay() != day) {
+                    List<Timetable> temptimetable = templist.get(i).getTimetable();
+
+                    temptimetable.remove(timetablelist.get(j));
                 }
             }
         }
-        return subjects;
+        return templist;
     }
 }

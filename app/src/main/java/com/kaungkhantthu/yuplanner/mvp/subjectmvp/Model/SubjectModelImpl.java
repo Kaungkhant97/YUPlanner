@@ -110,14 +110,9 @@ public class SubjectModelImpl implements SubjectModel {
         Log.d(TAG, "getSubjectListFromCache: " + day);
         List<Subject> subjectList = new RealmList<>();
         realm.beginTransaction();
-        for (int i = 0; i < 7; i++) {
-            Subject s = getsubjectForperiod(day, i);
-            if (s != null) {
-                subjectList.add(s);
-            }
-        }
-       // RealmResults<Subject> realmSubjectlist = realm.where(Subject.class).equalTo("timetable.day", day).findAll();
-        subjectList = realm.copyFromRealm(subjectList);
+
+        RealmResults<Subject> realmSubjectlist = realm.where(Subject.class).equalTo("timetable.day", day).findAll();
+        subjectList = realm.copyFromRealm(realmSubjectlist);
         realm.commitTransaction();
         return subjectList;
     }
