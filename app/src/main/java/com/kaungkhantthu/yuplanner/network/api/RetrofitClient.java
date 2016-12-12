@@ -4,12 +4,20 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kaungkhantthu.yuplanner.data.entity.serializer.EventResponseSerializer;
-import com.kaungkhantthu.yuplanner.data.entity.serializer.EventSerializer;
+import com.google.gson.reflect.TypeToken;
+import com.kaungkhantthu.yuplanner.data.entity.eventserializer.EventResponseSerializer;
+import com.kaungkhantthu.yuplanner.data.entity.eventserializer.EventSerializer;
+import com.kaungkhantthu.yuplanner.data.entity.period;
+import com.kaungkhantthu.yuplanner.data.entity.subjectserializer.SubjectResponseSerializer;
+import com.kaungkhantthu.yuplanner.data.entity.subjectserializer.SubjectSerializer;
+import com.kaungkhantthu.yuplanner.data.entity.subjectserializer.TimeTableSerializer;
+import com.kaungkhantthu.yuplanner.data.entity.subjectserializer.periodSerializer;
 
 import java.util.concurrent.TimeUnit;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -18,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
 
-    public static String URL = APIConfig.BASE_URL;
+    private static String URL = APIConfig.BASE_URL;
     private static RetrofitClient mInstance;
     private RetrofitService mService;
 
@@ -39,9 +47,9 @@ public class RetrofitClient {
 
 
         //this code is to work both Realm and Gson
-      Gson gson = null;
+        Gson gson = null;
         try {
-             gson = new GsonBuilder()
+            gson = new GsonBuilder()
                     .setExclusionStrategies(new ExclusionStrategy() {
                         @Override
                         public boolean shouldSkipField(FieldAttributes f) {
@@ -54,7 +62,14 @@ public class RetrofitClient {
                         }
 
                     }).registerTypeAdapter(Class.forName("io.realm.EventRealmProxy"), new EventSerializer())
+
                     .registerTypeAdapter(Class.forName("io.realm.EventResponseRealmProxy"), new EventResponseSerializer())
+                    .registerTypeAdapter(Class.forName("io.realm.mSubjectResponseRealmProxy"), new SubjectResponseSerializer())
+                    .registerTypeAdapter(Class.forName("io.realm.SubjectRealmProxy"), new SubjectSerializer())
+                    .registerTypeAdapter(Class.forName("io.realm.TimetableRealmProxy"), new TimeTableSerializer())
+                    .registerTypeAdapter(new TypeToken<RealmList<period>>() {}.getType(),
+                            new periodSerializer())
+
 
                     .create();
         } catch (Exception e) {
@@ -62,15 +77,12 @@ public class RetrofitClient {
         }
 
 
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient)
+                .build();
 
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(httpClient)
-                    .build();
-
-            mService = retrofit.create(RetrofitService.class);
-
-
+        mService = retrofit.create(RetrofitService.class);
 
 
     }

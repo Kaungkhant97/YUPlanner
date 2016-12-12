@@ -5,11 +5,13 @@ package com.kaungkhantthu.yuplanner.network.api;
 
 import com.kaungkhantthu.yuplanner.data.entity.Event;
 import com.kaungkhantthu.yuplanner.data.entity.EventResponse;
+import com.kaungkhantthu.yuplanner.data.entity.mSubjectResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -20,6 +22,21 @@ public interface RetrofitService {
 
   @GET(APIConfig.EVENT_LIST)
   Call<EventResponse> getEventList();
+
+  @GET(APIConfig.SUBJECT_LIST)
+  Call<mSubjectResponse> getSubjectList();
+
+
+  @GET(APIConfig.SUBJECT_LIST+"{major}/{year}/{mclass}")
+  Call<mSubjectResponse> getSubjectList(@Path("major") String major,
+                                        @Path("year") String year,
+                                        @Path("mclass") String mclass);
+
+  @GET(APIConfig.SUBJECT_LIST+"{major}/{year}/{mclass}/{day}")
+  Call<mSubjectResponse> getSubjectList(@Path("major") String major,
+                                        @Path("year") String year,
+                                        @Path("mclass") String mclass,
+                                        @Path("day") String day);
 
   @POST(APIConfig.EVENT_LIST)
   Call<Event> postEvent(@Body Event e);

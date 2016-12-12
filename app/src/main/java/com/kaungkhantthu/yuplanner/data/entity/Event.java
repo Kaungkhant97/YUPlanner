@@ -3,6 +3,8 @@ package com.kaungkhantthu.yuplanner.data.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 
 /**
@@ -20,6 +22,18 @@ public class Event extends RealmObject {
     @SerializedName("_id")
     @Expose
     private String id;
+    @SerializedName("imgUrl")
+    @Expose
+    private String imgUrl;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @SerializedName("title")
     @Expose
     private String title;
@@ -49,6 +63,16 @@ public class Event extends RealmObject {
     @SerializedName("byUserid")
     @Expose
     private String userid;
+
+    private Date formattedDate;
+
+    public Date getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(Date formattedDate) {
+        this.formattedDate = formattedDate;
+    }
 
     public Event(String tags, String title, String place, String time, String date, String publishedDate, String description, String username, String userid) {
         this.tags = tags;
