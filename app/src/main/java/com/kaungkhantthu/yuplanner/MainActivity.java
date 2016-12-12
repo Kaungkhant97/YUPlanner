@@ -48,6 +48,13 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     }
 
+    private void setTextTitle() {
+        String month = DateChangeNotifier.getInstance().getcurrentSelectedDate().get(Calendar.MONTH) + "";
+        String year = DateChangeNotifier.getInstance().getcurrentSelectedDate().get(Calendar.YEAR) + "";
+        String date = month + " " + year;
+        getSupportActionBar().setTitle(date);
+    }
+
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -61,10 +68,10 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         setupViewPager();
         setupCalendarView();
         SubjectModelImpl subjectModel = SubjectModelImpl.getInstance();
-        subjectModel.getSubjectList("CS","4","",new SubjectModelImpl.Callback() {
+        subjectModel.getSubjectList("CS", "4", "", new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {
-            test(sbjs);
+                test(sbjs);
 
             }
 
@@ -132,12 +139,13 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         DateChangeNotifier.getInstance().notifyAllView(date.getCalendar());
         DateChangeNotifier.getInstance().setcurrentSelectedDate(date.getCalendar());
+        //setTextTitle();
 
     }
 
     @Override
     public void BindToCalendar(List<Event> events) throws ParseException {
-        int color = getResources().getColor(R.color.white);
+        int color = getResources().getColor(R.color.dark);
         ArrayList<CalendarDay> eventdateList = new ArrayList();
         for (Event e : events) {
             Date d = Utils.formatDate(e.getPublishedDate());
