@@ -34,8 +34,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         notifyDataSetChanged();
     }
 
-    ;
-
     @Override
     public SubjectAdapter.SubjectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_subject, parent, false);
@@ -86,7 +84,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
                     color = context.getResources().getColor(R.color.primary);
                     break;
             }
-            
+
             cardview_layout.setBackgroundColor(color);
             txt_sbjname.setText(subjects.getSubjectId());
             tv_teacher_name.setText(subjects.getTeachername());

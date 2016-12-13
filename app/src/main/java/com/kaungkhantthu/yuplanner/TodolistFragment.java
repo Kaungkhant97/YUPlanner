@@ -48,4 +48,14 @@ public class TodolistFragment extends Fragment implements TodolistView{
     public void showtodoList(List<TodoTask> todoTasks) {
 
     }
+
+    @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
+    public void showDialog() {
+
+    }
 }
