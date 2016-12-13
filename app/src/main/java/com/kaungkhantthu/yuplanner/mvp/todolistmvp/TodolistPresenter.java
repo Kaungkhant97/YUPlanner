@@ -10,6 +10,7 @@ import java.util.Calendar;
  */
 
 public interface TodolistPresenter extends mvpPresenter {
+    void init();
     @Override
     void onDateChange(Calendar c);
 
