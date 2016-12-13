@@ -70,6 +70,7 @@ public class EventFragment extends Fragment implements EventView {
     public void showEvent(List<Event> eventList) {
         errorlayout.setVisibility(View.GONE);
         recycler_event.setVisibility(View.VISIBLE);
+        recycler_event.bringToFront();
         adapter.clearEvents();
         adapter.addallEvents(eventList);
     }
@@ -79,6 +80,7 @@ public class EventFragment extends Fragment implements EventView {
         Log.e( "showErrorView: ", "error in event");
         errorlayout.setVisibility(View.VISIBLE);
         recycler_event.setVisibility(View.GONE);
+        errorlayout.bringToFront();
         errorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
