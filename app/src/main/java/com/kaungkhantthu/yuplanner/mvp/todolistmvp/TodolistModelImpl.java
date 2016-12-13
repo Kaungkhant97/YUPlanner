@@ -59,7 +59,7 @@ public class TodolistModelImpl implements TodolistModel {
         List<TodoTask> todoTasks = new RealmList<>();
         c.set(fromDate.getYear(), fromDate.getMonth(), fromDate.getDate(), 23, 55, 50);
         Date toDate = c.getTime();
-        realm.beginTransaction();
+
         RealmResults<TodoTask> todolist = realm.where(TodoTask.class).findAll();
         for (TodoTask t : todolist) {
             //TODO check this shit

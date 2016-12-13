@@ -30,7 +30,7 @@ public class TodolistPresenterImpl implements TodolistPresenter {
         }
         return todolistPresenter;
     }
-
+    @Override
     public void init(){
         this.todolistModel =  TodolistModelImpl.getInstance();
         Calendar calendar = DateChangeNotifier.getInstance().getcurrentSelectedDate();

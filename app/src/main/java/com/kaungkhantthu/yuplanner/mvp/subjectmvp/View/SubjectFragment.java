@@ -34,6 +34,7 @@ import io.realm.RealmResults;
 
 public class SubjectFragment extends Fragment implements SubjectView {
 
+    private static final String TAG = SubjectFragment.class.getName();
     private RecyclerView recyler_subjects;
     private SubjectPresenterImpl subjectPresenter;
     private SubjectAdapter adapter;
@@ -68,7 +69,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
 
     @Override
     public void onDateChange(Calendar c) {
-
+        Log.e(TAG, "onDateChange: " );
 
         subjectPresenter.onDateChange(c);
     }

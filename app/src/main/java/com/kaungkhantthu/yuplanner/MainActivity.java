@@ -36,6 +36,7 @@ import io.realm.RealmList;
 
 public class MainActivity extends AppCompatActivity implements OnDateSelectedListener, MainView {
 
+    private static final String TAG = MainActivity.class.getName();
     TabLayout tabLayout;
     Toolbar toolbar;
     ViewPager viewPager;
@@ -47,10 +48,23 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.e(TAG, "onCreate: " );
         init();
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: " );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: " );
+
+    }
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         this.mainpresenter = MainPresenterImpl.getInstance(this);
         mainpresenter.init();
 
-
+        Log.e( "init: ", "inittt");
         setupToolbar();
         setupViewPager();
         setupCalendarView();
@@ -117,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         DateChangeNotifier.getInstance().notifyAllView(date.getCalendar());
         DateChangeNotifier.getInstance().setcurrentSelectedDate(date.getCalendar());
+        Log.e(TAG, "onDateSelected: " );
         mainpresenter.onDateChange(date.getCalendar());
         String month = date.getCalendar().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
         getSupportActionBar().setTitle(month+" "+ date.getCalendar().get(Calendar.DAY_OF_MONTH));
