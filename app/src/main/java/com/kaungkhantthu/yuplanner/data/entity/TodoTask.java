@@ -8,7 +8,18 @@ import io.realm.RealmObject;
  * Created by kaungkhantthu on 12/13/16.
  */
 
-public class TodoTask extends RealmObject{
+public class TodoTask extends RealmObject {
+    private String id;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+
+        return id;
+    }
+
     private String name;
     private String time;
     private String date;
@@ -27,7 +38,8 @@ public class TodoTask extends RealmObject{
     public TodoTask() {
     }
 
-    public TodoTask(String name, String time, String date, String note, Date formattedDate) {
+    public TodoTask(String name, String time, String date, String note, Date formattedDate, String id) {
+        this.id = id;
         this.name = name;
         this.time = time;
         this.date = date;

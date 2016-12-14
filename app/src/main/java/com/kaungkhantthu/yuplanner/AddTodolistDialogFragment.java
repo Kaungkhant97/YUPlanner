@@ -3,41 +3,59 @@ package com.kaungkhantthu.yuplanner;
 import android.app.TimePickerDialog;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.app.TimePickerDialog;
-import android.content.Context;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistModel;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistModelImpl;
-import com.kaungkhantthu.yuplanner.recyclerView.ToDoAdapter;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import io.realm.Realm;
 
 /**
  * Created by Administrator's user on 13-Dec-16.
  */
 
-public class AddTodolistDialogFragment extends android.support.v4.app.DialogFragment implements View.OnClickListener {
+public class AddTodolistDialogFragment extends DialogFragment implements View.OnClickListener,View.OnFocusChangeListener {
 
-    TextView btnSubmit;
-    EditText etName;
-    EditText etTime;
-    EditText etDate;
-    EditText etNote;
-    CheckBox cbAlarm;
+    private submitButtonClickListener listener;
+
+    public void setListener(submitButtonClickListener listener) {
+        this.listener = listener;
+    }
+
+    private static final String SIMPLE_DATE_FORMATE ="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" ;
+    private TextView btnSubmit;
+    private EditText etName;
+    private EditText etTime;
+    private EditText etDate;
+    private EditText etNote;
+    private CheckBox cbAlarm;
+    private ImageView btnEdit;
+    private ImageView btnDelete;
+    private ImageView btnFinished;
+    private ImageView btnSetAlarm;
+
+    int gyear;
+    int gmonth;
+    int gday;
+    int ghour;
+    int gmin;
 
     TodolistModel todolistModel;
     TodoTask todoTask;
@@ -64,6 +82,9 @@ public class AddTodolistDialogFragment extends android.support.v4.app.DialogFrag
         btnSubmit.setOnClickListener(this);
         etTime.setOnClickListener(this);
         etDate.setOnClickListener(this);
+
+        etTime.setOnFocusChangeListener(this);
+        etDate.setOnFocusChangeListener(this);
         return view;
     }
 
@@ -72,6 +93,7 @@ public class AddTodolistDialogFragment extends android.support.v4.app.DialogFrag
         switch (view.getId()) {
             case R.id.btn_submit:
                 saveToDoTask();
+
                 break;
             case R.id.et_date:
                 showDatePicker();
@@ -87,14 +109,21 @@ public class AddTodolistDialogFragment extends android.support.v4.app.DialogFrag
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity().getApplicationContext(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                if (i < 10 || i1 < 10) {
-                    etTime.setText("0" + i + ":" + "0" + i1);
-                } else {
-                    etTime.setText(i + ":" + i1);
+            public void onTimeSet(TimePicker timePicker, int hour, int min) {
+                ghour = hour;
+                gmin = min;
+
+                String shour = "" + hour;
+                String smin = "" + min;
+                if (hour < 10) {
+                    shour = "0" + hour;
                 }
+                if(min<10){
+                    smin = "0" + min;
+                }
+                etTime.setText(shour + ":" + smin);
             }
         }, hour, minute, true);
 
@@ -109,10 +138,13 @@ public class AddTodolistDialogFragment extends android.support.v4.app.DialogFrag
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity().getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                etDate.setText(i + "-" + i1 + "-" + i2);
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                gyear = year;
+                gmonth = month;
+                gday = day;
+                etDate.setText(year + "-" + month + "-" + day);
             }
         }, year, month, day);
 
@@ -124,6 +156,39 @@ public class AddTodolistDialogFragment extends android.support.v4.app.DialogFrag
         todoTask.setTime(etTime.getText().toString());
         todoTask.setDate(etDate.getText().toString());
         todoTask.setNote(etNote.getText().toString());
+        todoTask.setId(todoTask.hashCode() + "");
+        todoTask.setFormattedDate(getPublishedDate());
         todolistModel.saveTask(todoTask);
+        listener.onSubmit();
+        dismiss();
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        switch (view.getId())
+        {
+            case R.id.et_time:
+                if(b)
+                    showTimePicker();
+                break;
+            case R.id.et_date:
+                if(b)
+                    showDatePicker();
+                break;
+        }
+    }
+
+   public Date getPublishedDate(){
+        SimpleDateFormat format = new SimpleDateFormat(SIMPLE_DATE_FORMATE);
+
+        Calendar c = Calendar.getInstance();
+        c.set(gyear, gmonth, gday, ghour, gmin);
+        format.setTimeZone( c.getTimeZone());
+
+        return c.getTime();
+    }
+
+    public interface submitButtonClickListener{
+     void onSubmit();
     }
 }

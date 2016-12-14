@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodolistFragment extends Fragment implements TodolistView {
+public class TodolistFragment extends Fragment implements TodolistView, AddTodolistDialogFragment.submitButtonClickListener {
 
 
     private TodolistPresenter presenter;
@@ -62,6 +62,7 @@ public class TodolistFragment extends Fragment implements TodolistView {
     private void initRecycler() {
         recyclerTodolist.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ToDoAdapter(new ArrayList<TodoTask>());
+        recyclerTodolist.setAdapter(adapter);
 
     }
 
@@ -90,6 +91,12 @@ public class TodolistFragment extends Fragment implements TodolistView {
     @Override
     public void showDialog() {
         AddTodolistDialogFragment d = new AddTodolistDialogFragment();
+        d.setListener(this);
         d.show(getChildFragmentManager(), "g");
+    }
+
+    @Override
+    public void onSubmit() {
+        presenter.refreshList();
     }
 }
