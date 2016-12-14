@@ -7,6 +7,7 @@ import com.kaungkhantthu.yuplanner.mvp.eventmvp.presenter.EventPresenterImpl;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.views.EventView;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +35,8 @@ public class TodolistPresenterImpl implements TodolistPresenter {
     public void init(){
         this.todolistModel =  TodolistModelImpl.getInstance();
         Calendar calendar = DateChangeNotifier.getInstance().getcurrentSelectedDate();
-        List<TodoTask> taskList = todolistModel.getTasks(calendar.getTime());
+        List<TodoTask> taskList = new ArrayList<>();
+        taskList =  todolistModel.getTasks(calendar.getTime());
         if(taskList == null){
             todolistView.showErrorView();
 

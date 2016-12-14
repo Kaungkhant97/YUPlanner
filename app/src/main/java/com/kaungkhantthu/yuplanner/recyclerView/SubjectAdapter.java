@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.util.Util;
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.utils.Utils;
@@ -59,8 +58,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
 
     public class SubjectViewHolder extends RecyclerView.ViewHolder {
-        private TextView txt_sbjname;
-        private TextView tv_teacher_name;
+        private TextView tv_order;
+        private TextView tv_moduleno;
+        private TextView tv_teacher;
         private TextView tv_subject;
         private TextView tv_period;
         private LinearLayout cardview_layout;
@@ -68,8 +68,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         public SubjectViewHolder(View itemView) {
             super(itemView);
             cardview_layout = (LinearLayout) itemView.findViewById(R.id.cardview_layout);
-            txt_sbjname = (TextView) itemView.findViewById(R.id.txt_sbjname);
-            tv_teacher_name = (TextView) itemView.findViewById(R.id.tv_teacher_name);
+            tv_order = (TextView) itemView.findViewById(R.id.tv_order);
+            tv_moduleno = (TextView) itemView.findViewById(R.id.tv_moduleno);
+            tv_teacher = (TextView) itemView.findViewById(R.id.tv_teacher);
             tv_subject = (TextView) itemView.findViewById(R.id.tv_subject);
             tv_period = (TextView) itemView.findViewById(R.id.tv_period);
         }
@@ -86,8 +87,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             }
 
             cardview_layout.setBackgroundColor(color);
-            txt_sbjname.setText(subjects.getSubjectId());
-            tv_teacher_name.setText(subjects.getTeachername());
+            tv_order.setText("1st");
+            tv_moduleno.setText(subjects.getSubjectId());
+            tv_teacher.setText(subjects.getTeachername());
             tv_subject.setText(subjects.getSubjectname());
 
             if (getPosition() == 0) {
