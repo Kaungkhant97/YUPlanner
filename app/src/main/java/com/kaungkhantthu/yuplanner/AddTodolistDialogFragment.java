@@ -30,7 +30,7 @@ import java.util.Calendar;
  * Created by Administrator's user on 13-Dec-16.
  */
 
-public class AddTodolistDialogFragment extends DialogFragment implements View.OnClickListener {
+public class AddTodolistDialogFragment extends android.support.v4.app.DialogFragment implements View.OnClickListener {
 
     TextView btnSubmit;
     EditText etName;
