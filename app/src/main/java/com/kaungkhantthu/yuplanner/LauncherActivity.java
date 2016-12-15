@@ -77,6 +77,8 @@ public class LauncherActivity extends AppCompatActivity {
                     realm.where(Subject.class).findAll().deleteAllFromRealm();
                     realm.commitTransaction();
                     Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                     startActivity(intent);
 
                 }

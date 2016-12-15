@@ -7,7 +7,9 @@ import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModel;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
+import com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter.SubjectPresenterImpl;
 import com.kaungkhantthu.yuplanner.utils.Constants;
+import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
 import com.kaungkhantthu.yuplanner.utils.Utils;
 
@@ -85,6 +87,7 @@ public class MainPresenterImpl implements MainPresenter {
             public void onSuccess(RealmList<Subject> sbjs) {
                 subjectModel.clearSubject();
                 subjectModel.saveSubject(sbjs);
+                DateChangeNotifier.getInstance().notifyAllView(DateChangeNotifier.getInstance().getcurrentSelectedDate());
 
             }
 

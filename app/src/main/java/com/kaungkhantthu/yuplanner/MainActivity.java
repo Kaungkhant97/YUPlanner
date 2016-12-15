@@ -86,24 +86,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.e(TAG, "onRestoreInstanceState: ");
-        RealmResults<Event> list = EventModelImpl.getInstance().getAllEventFromCache();
-        List<Event> mlist = Realm.getDefaultInstance().copyFromRealm(list);
-        try {
-            BindToCalendar(mlist);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date d = DateChangeNotifier.getInstance().getcurrentSelectedDate().getTime();
-        calendarView.setSelectedDate(d);
-       /* int tabcount = (int) savedInstanceState.get(TABCOUNT);
-        int tabselected = (int) savedInstanceState.get(SELECTEDTAB);
-        if (tabcount > tabLayout.getTabCount()) {
-            showeventtab();
-        } else if (tabcount < tabLayout.getTabCount()) {
-            hideventtab();
-        }
-        viewPager.setCurrentItem(tabselected);*/
 
     }
 
@@ -203,7 +185,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         int id = item.getItemId();
         if(id == R.id.action_settings){
             SPrefHelper.putBoolean(this, Constants.FIRSTTIME,true);
-            startActivity(new Intent(this,LauncherActivity.class));
+            Intent i =new Intent(this,LauncherActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
         }
 
         return true;

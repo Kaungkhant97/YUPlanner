@@ -143,7 +143,7 @@ public class SubjectPresenterImpl implements SubjectPresenter {
             public void onSuccess(RealmList<Subject> sbjs) {
                 subjectModel.clearSubject();
                 subjectModel.saveSubject(sbjs);
-                subjectView.showsubjects(sbjs);
+                subjectView.onDateChange(DateChangeNotifier.getInstance().getcurrentSelectedDate());
 
             }
 
