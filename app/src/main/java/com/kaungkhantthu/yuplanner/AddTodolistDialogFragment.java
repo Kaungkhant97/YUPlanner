@@ -48,7 +48,6 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
     private EditText etTime;
     private EditText etDate;
     private EditText etNote;
-    private CheckBox cbAlarm;
     private ImageView btnClose;
     private TextInputLayout tilDate;
     private TextInputLayout tilTime;
@@ -80,7 +79,6 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         etTime = (EditText) view.findViewById(R.id.et_time);
         etDate = (EditText) view.findViewById(R.id.et_date);
         etNote = (EditText) view.findViewById(R.id.et_note);
-        cbAlarm = (CheckBox) view.findViewById(R.id.cb_alarm);
         btnClose = (ImageView) view.findViewById(R.id.btn_close);
         tilTime = (TextInputLayout) view.findViewById(R.id.til_time);
         tilDate = (TextInputLayout) view.findViewById(R.id.til_date);

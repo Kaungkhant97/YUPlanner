@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenter;
@@ -32,6 +34,8 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
     private FloatingActionButton fab;
     private RecyclerView recyclerTodolist;
     private ToDoAdapter adapter;
+    private FrameLayout errorLayout;
+    private TextView errrorText;
 
     public TodolistFragment() {
         // Required empty public constructor
@@ -46,6 +50,10 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
 
         fab = ((MainActivity) getActivity()).fab;
         recyclerTodolist = (RecyclerView) v.findViewById(R.id.recycler_todo);
+        errorLayout = (FrameLayout) v.findViewById(R.id.errorLayout);
+        errrorText = (TextView)v.findViewById(R.id.errorText);
+        errorLayout.setVisibility(View.GONE);
+
         initRecycler();
         init();
 
@@ -80,13 +88,18 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
 
     @Override
     public void showtodoList(List<TodoTask> todoTasks) {
+
+        errorLayout.setVisibility(View.GONE);
+        recyclerTodolist.setVisibility(View.VISIBLE);
         adapter.clearToDoTasks();
         adapter.addAllToDoTasks(todoTasks);
     }
 
     @Override
     public void showErrorView() {
-
+        errorLayout.setVisibility(View.VISIBLE);
+        recyclerTodolist.setVisibility(View.GONE);
+        errrorText.setText(R.string.errorMessageTodo);
     }
 
     @Override

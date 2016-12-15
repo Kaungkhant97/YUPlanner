@@ -12,13 +12,14 @@ import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectFragment;
  * Created by kaungkhantthu on 11/29/16.
  */
 
-public class TabPagerAdapter extends FragmentPagerAdapter{
+public class TabPagerAdapter extends FragmentPagerAdapter {
+    private int count = 3;
+
     public void setCount(int count) {
         this.count = count;
         notifyDataSetChanged();
     }
 
-    private int count;
 
     public TabPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -26,12 +27,12 @@ public class TabPagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        if(position == 2){
-            return  new EventFragment();
-        }else if(position == 1){
+        if (position == 2) {
+            return new EventFragment();
+        } else if (position == 1) {
             return new SubjectFragment();
 
-        }else{
+        } else {
             return new TodolistFragment();
         }
     }
