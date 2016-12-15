@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenter;
@@ -48,7 +49,6 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
         recyclerTodolist = (RecyclerView) v.findViewById(R.id.recycler_todo);
         initRecycler();
         init();
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,6 +7,8 @@
     tools:context="com.kaungkhantthu.yuplanner.TodolistFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/todolist_instruction"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_todo"
         android:layout_width="match_parent"
