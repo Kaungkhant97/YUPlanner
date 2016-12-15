@@ -99,7 +99,7 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
     public void showErrorView() {
         errorLayout.setVisibility(View.VISIBLE);
         recyclerTodolist.setVisibility(View.GONE);
-        errrorText.setText(R.string.errorMessageTodo);
+        errrorText.setText("Press + To Create A Task");
     }
 
     @Override

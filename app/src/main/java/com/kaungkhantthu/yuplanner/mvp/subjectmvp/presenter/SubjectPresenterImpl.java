@@ -64,7 +64,7 @@ public class SubjectPresenterImpl implements SubjectPresenter {
 
         subjects = formatList(subjects, day);
         if (day == 1 || day == 7) {
-            subjectView.showErrorView("There is no Timetable For this Day");
+            subjectView.showErrorView("No Timetable for today");
         }
         {
 
