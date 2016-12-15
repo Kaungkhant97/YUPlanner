@@ -76,8 +76,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
             Glide.with(c)
                     .load(e.getImgUrl())
-                    .placeholder(R.drawable.uy)
-                    .error(R.drawable.dummy_photo)
+                    .placeholder(R.drawable.dummy_photo)
+                    .error(R.drawable.error)
                     .into(img_cover);
         }
     }
