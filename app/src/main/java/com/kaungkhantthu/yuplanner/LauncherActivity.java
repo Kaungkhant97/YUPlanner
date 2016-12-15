@@ -38,7 +38,12 @@ public class LauncherActivity extends AppCompatActivity {
         final boolean firstTime = SPrefHelper.getBoolean(this, Constants.FIRSTTIME, true);
 
         if(!firstTime){
-            startActivity(new Intent(this,MainActivity.class));
+            Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
+            finish();
+
         }
 
 
@@ -80,6 +85,8 @@ public class LauncherActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                     startActivity(intent);
+                    finish();
+                    onDestroy();
 
                 }
             }
