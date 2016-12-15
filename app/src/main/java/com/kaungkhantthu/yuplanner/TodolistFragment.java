@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
+import com.kaungkhantthu.yuplanner.mvp.eventmvp.views.EventFragment;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenter;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenterImpl;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistView;
@@ -30,6 +31,7 @@ import java.util.List;
 public class TodolistFragment extends Fragment implements TodolistView, AddTodolistDialogFragment.submitButtonClickListener {
 
 
+    private static TodolistFragment todolistFragment;
     private TodolistPresenter presenter;
     private FloatingActionButton fab;
     private RecyclerView recyclerTodolist;
@@ -37,8 +39,14 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
     private FrameLayout errorLayout;
     private TextView errrorText;
 
-    public TodolistFragment() {
-        // Required empty public constructor
+    private TodolistFragment() {
+
+    }
+    public static TodolistFragment getInstance(){
+        if(todolistFragment == null){
+            todolistFragment = new TodolistFragment();
+        }
+        return todolistFragment;
     }
 
 
@@ -77,7 +85,7 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
 
     private void init() {
         DateChangeNotifier.getInstance().addNotifyView(this);
-        presenter = TodolistPresenterImpl.getInstance(this);
+        presenter = new TodolistPresenterImpl(this);
         presenter.init();
     }
 

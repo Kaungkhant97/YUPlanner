@@ -2,6 +2,7 @@ package com.kaungkhantthu.yuplanner.mvp.mainmvp;
 
 import android.content.Context;
 
+import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.data.entity.Event;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModel;
@@ -27,21 +28,15 @@ import io.realm.RealmList;
 public class MainPresenterImpl implements MainPresenter {
 
     private static MainPresenter mainPresenter;
-    private static MainView mainview;
+    private  MainView mainview;
     private EventModel eventModel;
     private SubjectModelImpl subjectModel;
 
-    private MainPresenterImpl() {
+    public MainPresenterImpl(MainView v) {
+        this.mainview =  v;
     }
 
-    public static MainPresenter getInstance(MainView v) {
 
-        if (mainPresenter == null) {
-            mainPresenter = new MainPresenterImpl();
-            mainview = v;
-        }
-        return mainPresenter;
-    }
 
 
     @Override
@@ -78,7 +73,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     }
 
-    private void requestSubjectFromServer(Context c) {
+    private void requestSubjectFromServer(final Context c) {
         String major = SPrefHelper.getString(c, Constants.MAJOR, "");
         String mClass = SPrefHelper.getString(c, Constants.CLASS, "");
         String year = SPrefHelper.getString(c, Constants.YEAR, "");
@@ -87,7 +82,10 @@ public class MainPresenterImpl implements MainPresenter {
             public void onSuccess(RealmList<Subject> sbjs) {
                 subjectModel.clearSubject();
                 subjectModel.saveSubject(sbjs);
+
                 DateChangeNotifier.getInstance().notifyAllView(DateChangeNotifier.getInstance().getcurrentSelectedDate());
+
+
 
             }
 

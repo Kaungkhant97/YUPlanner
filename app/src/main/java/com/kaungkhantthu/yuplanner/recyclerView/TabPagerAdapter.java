@@ -28,12 +28,12 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 2) {
-            return new EventFragment();
+            return  EventFragment.getInstance();
         } else if (position == 1) {
-            return new SubjectFragment();
+            return  SubjectFragment.getInstance();
 
         } else {
-            return new TodolistFragment();
+            return  TodolistFragment.getInstance();
         }
     }
 
@@ -41,4 +41,5 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return this.count;
     }
+
 }

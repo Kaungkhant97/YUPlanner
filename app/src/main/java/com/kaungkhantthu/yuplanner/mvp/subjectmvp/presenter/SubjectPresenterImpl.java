@@ -26,21 +26,15 @@ import retrofit2.http.Path;
  */
 
 public class SubjectPresenterImpl implements SubjectPresenter {
-    private static SubjectPresenterImpl subjectPresenter;
-    private static SubjectView subjectView;
+    private  SubjectView subjectView;
+
     private SubjectModel subjectModel;
 
-    private SubjectPresenterImpl() {
+    public SubjectPresenterImpl(SubjectView v) {
+
+        this.subjectView = v;
     }
 
-    public static SubjectPresenterImpl getInstance(SubjectView s) {
-        if (subjectPresenter == null) {
-            subjectPresenter = new SubjectPresenterImpl();
-            subjectView = s;
-
-        }
-        return subjectPresenter;
-    }
 
     public void init() {
         this.subjectModel = SubjectModelImpl.getInstance();

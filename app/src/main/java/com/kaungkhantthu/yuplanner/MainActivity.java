@@ -89,14 +89,14 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     }
 
-    private void init() {
+    public void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         mainCoordinator = (CoordinatorLayout)findViewById(R.id.mainCoordinator);
         fab =(FloatingActionButton)findViewById(R.id.fab);
-        this.mainpresenter = MainPresenterImpl.getInstance(this);
+        this.mainpresenter =new MainPresenterImpl(this);
         mainpresenter.init(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     }
 
 
-    private void setupCalendarView() {
+    public void setupCalendarView() {
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
         calendarView.setSelectedDate(Calendar.getInstance().getTime());
         calendarView.setOnDateChangedListener(this);
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         getSupportActionBar().setTitle("");
     }
 
-    private void setupViewPager() {
+    public void setupViewPager() {
 
         tabLayout.addTab(tabLayout.newTab().setText("Assignment"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
@@ -235,5 +235,11 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             fab.hide();
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.e(TAG, "onDestroy: " );
+        super.onDestroy();
     }
 }

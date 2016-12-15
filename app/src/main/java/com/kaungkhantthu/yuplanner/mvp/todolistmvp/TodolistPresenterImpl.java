@@ -18,19 +18,13 @@ import java.util.List;
 
 public class TodolistPresenterImpl implements TodolistPresenter {
 
-    private static TodolistView todolistView;
-    private static TodolistPresenterImpl todolistPresenter;
+    private TodolistView todolistView;
     private TodolistModelImpl todolistModel;
 
-
-    public static TodolistPresenterImpl getInstance(TodolistView v) {
-        if (todolistPresenter == null) {
-            todolistPresenter = new TodolistPresenterImpl();
-            todolistView = v;
-
-        }
-        return todolistPresenter;
+    public TodolistPresenterImpl(TodolistView v) {
+        this.todolistView = v;
     }
+
 
     @Override
     public void init() {

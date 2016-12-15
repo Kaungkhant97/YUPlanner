@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
+import com.kaungkhantthu.yuplanner.TodolistFragment;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.data.entity.Timetable;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.presenter.EventPresenterImpl;
@@ -39,6 +40,7 @@ import io.realm.RealmResults;
 public class SubjectFragment extends Fragment implements SubjectView {
 
     private static final String TAG = SubjectFragment.class.getName();
+    private static SubjectFragment subjectFragment;
     private RecyclerView recyler_subjects;
     private SubjectPresenterImpl subjectPresenter;
     private SubjectAdapter adapter;
@@ -46,6 +48,15 @@ public class SubjectFragment extends Fragment implements SubjectView {
     private Button errorbtn;
     private TextView errotext;
 
+    private SubjectFragment() {
+
+    }
+    public static SubjectFragment getInstance(){
+        if(subjectFragment == null){
+            subjectFragment = new SubjectFragment();
+        }
+        return subjectFragment;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +85,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
     }
 
     private void init() {
-        subjectPresenter = SubjectPresenterImpl.getInstance(this);
+        subjectPresenter = new SubjectPresenterImpl(this);
         subjectPresenter.init();
         DateChangeNotifier.getInstance().addNotifyView(this);
     }
@@ -104,6 +115,8 @@ public class SubjectFragment extends Fragment implements SubjectView {
     @Override
     public void showErrorView() {
         Log.e("showErrorView: ", "error in event");
+        errorlayout.bringToFront();
+
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
         errorbtn.setVisibility(View.VISIBLE);
@@ -121,7 +134,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
         errorbtn.setVisibility(View.GONE);
-
+        errorlayout.bringToFront();
         errotext.setText(error);
     }
 }

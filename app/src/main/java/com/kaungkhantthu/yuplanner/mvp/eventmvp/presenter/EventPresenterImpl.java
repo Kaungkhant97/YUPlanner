@@ -18,41 +18,33 @@ import io.realm.RealmList;
 public class EventPresenterImpl implements EventPresenter {
 
     private static EventPresenterImpl eventPresenter;
-    private static EventView eventView;
+    private EventView eventView;
     private EventModel eventModel;
 
-    private EventPresenterImpl() {
+    public EventPresenterImpl(EventView e) {
+        this.eventView = e;
     }
 
-    public static EventPresenterImpl getInstance(EventView e) {
-        if (eventPresenter == null) {
-            eventPresenter = new EventPresenterImpl();
-            eventView = e;
 
-        }
-        return eventPresenter;
-    }
-
-    public void init(){
-        this.eventModel =  EventModelImpl.getInstance();
+    public void init() {
+        this.eventModel = EventModelImpl.getInstance();
         Calendar calendar = DateChangeNotifier.getInstance().getcurrentSelectedDate();
         List<Event> eventList = eventModel.getEventsFor(calendar.getTime());
-        if(eventList == null || eventList.size() < 1){
+        if (eventList == null || eventList.size() < 1) {
             eventView.showErrorView();
 
-        }else{
+        } else {
             eventView.showEvent(eventList);
         }
     }
 
 
-
     @Override
     public void onDateChange(Calendar c) {
-       List<Event> e= eventModel.getEventsFor(c.getTime());
-        if(e == null ){
+        List<Event> e = eventModel.getEventsFor(c.getTime());
+        if (e == null) {
             eventView.showErrorView();
-        }else{
+        } else {
             eventView.showEvent(e);
         }
     }

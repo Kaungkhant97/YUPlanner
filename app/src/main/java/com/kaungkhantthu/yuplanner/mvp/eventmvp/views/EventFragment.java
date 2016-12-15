@@ -29,6 +29,7 @@ import java.util.List;
  */
 
 public class EventFragment extends Fragment implements EventView {
+    private static EventFragment eventFragment;
     private RecyclerView recycler_event;
     private ArrayList<Event> eventArrayList;
     private EventAdapter adapter;
@@ -42,6 +43,15 @@ public class EventFragment extends Fragment implements EventView {
 
     }
 
+    private EventFragment() {
+
+    }
+    public static EventFragment getInstance(){
+        if(eventFragment == null){
+            eventFragment = new EventFragment();
+        }
+        return eventFragment;
+    }
 
     @Nullable
     @Override
@@ -56,7 +66,7 @@ public class EventFragment extends Fragment implements EventView {
     }
 
     private void init() {
-        eventPresenter = EventPresenterImpl.getInstance(this);
+        eventPresenter = new EventPresenterImpl(this);
         eventPresenter.init();
         DateChangeNotifier.getInstance().addNotifyView(this);
     }
@@ -86,14 +96,14 @@ public class EventFragment extends Fragment implements EventView {
 
     @Override
     public void showErrorView() {
-        Log.e( "showErrorView: ", "error in event");
+        Log.e("showErrorView: ", "error in event");
         errorlayout.setVisibility(View.VISIBLE);
         recycler_event.setVisibility(View.GONE);
         errorlayout.bringToFront();
         errorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e( "onClick: ", "click"+"");
+                Log.e("onClick: ", "click" + "");
                 eventPresenter.requestEvents();
             }
         });
