@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistModel;
@@ -31,7 +32,7 @@ import io.realm.Realm;
  * Created by Administrator's user on 13-Dec-16.
  */
 
-public class AddTodolistDialogFragment extends DialogFragment implements View.OnClickListener,View.OnFocusChangeListener {
+public class AddTodolistDialogFragment extends DialogFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private submitButtonClickListener listener;
 
@@ -39,7 +40,7 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         this.listener = listener;
     }
 
-    private static final String SIMPLE_DATE_FORMATE ="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" ;
+    private static final String SIMPLE_DATE_FORMATE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private TextView btnSubmit;
     private EditText etName;
     private EditText etTime;
@@ -82,8 +83,12 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         btnSubmit.setOnClickListener(this);
         etTime.setOnClickListener(this);
         etDate.setOnClickListener(this);
-
+        etTime.setFocusable(false);
+        etTime.setOnKeyListener(null);
+        etDate.setFocusable(false);
+        etDate.setOnKeyListener(null);
         etTime.setOnFocusChangeListener(this);
+
         etDate.setOnFocusChangeListener(this);
         return view;
     }
@@ -120,7 +125,7 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
                 if (hour < 10) {
                     shour = "0" + hour;
                 }
-                if(min<10){
+                if (min < 10) {
                     smin = "0" + min;
                 }
                 etTime.setText(shour + ":" + smin);
@@ -152,43 +157,48 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
     }
 
     private void saveToDoTask() {
-        todoTask.setName(etName.getText().toString());
-        todoTask.setTime(etTime.getText().toString());
-        todoTask.setDate(etDate.getText().toString());
-        todoTask.setNote(etNote.getText().toString());
-        todoTask.setId(todoTask.hashCode() + "");
-        todoTask.setFormattedDate(getPublishedDate());
-        todolistModel.saveTask(todoTask);
-        listener.onSubmit();
-        dismiss();
+        if (etTime.getText().toString() == null || etDate.getText().toString() == null) {
+            Toast.makeText(getContext(), "please complete the blanks", Toast.LENGTH_SHORT).show();
+        } else {
+
+            todoTask.setName(etName.getText().toString());
+            todoTask.setTime(etTime.getText().toString());
+            todoTask.setDate(etDate.getText().toString());
+            todoTask.setNote(etNote.getText().toString());
+            todoTask.setId(todoTask.hashCode() + "");
+            todoTask.setFormattedDate(getPublishedDate());
+            todolistModel.saveTask(todoTask);
+            listener.onSubmit();
+            dismiss();
+        }
+
     }
 
     @Override
     public void onFocusChange(View view, boolean b) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.et_time:
-                if(b)
+                if (b)
                     showTimePicker();
                 break;
             case R.id.et_date:
-                if(b)
+                if (b)
                     showDatePicker();
                 break;
         }
     }
 
-   public Date getPublishedDate(){
+    public Date getPublishedDate() {
         SimpleDateFormat format = new SimpleDateFormat(SIMPLE_DATE_FORMATE);
 
         Calendar c = Calendar.getInstance();
         c.set(gyear, gmonth, gday, ghour, gmin);
-        format.setTimeZone( c.getTimeZone());
+        format.setTimeZone(c.getTimeZone());
 
         return c.getTime();
     }
 
-    public interface submitButtonClickListener{
-     void onSubmit();
+    public interface submitButtonClickListener {
+        void onSubmit();
     }
 }

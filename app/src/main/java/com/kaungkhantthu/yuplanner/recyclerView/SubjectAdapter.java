@@ -42,7 +42,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
     @Override
     public void onBindViewHolder(SubjectAdapter.SubjectViewHolder holder, int position) {
-        holder.bindData(dataList.get(position), context, dataList);
+        holder.bindData(dataList.get(position), context, dataList,position);
 
     }
 
@@ -75,7 +75,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             tv_period = (TextView) itemView.findViewById(R.id.tv_period);
         }
 
-        public void bindData(Subject subjects, Context context, ArrayList<Subject> SubjectList) {
+        public void bindData(Subject subjects, Context context, ArrayList<Subject> SubjectList,int position) {
             int color = 0;
             switch (subjects.getMtype()) {
                 case "minor":
@@ -87,17 +87,17 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             }
 
             cardview_layout.setBackgroundColor(color);
-            tv_order.setText("1st");
+            tv_order.setText(position+"");
             tv_moduleno.setText(subjects.getSubjectId());
             tv_teacher.setText(subjects.getTeachername());
             tv_subject.setText(subjects.getSubjectname());
-
-            if (getPosition() == 0) {
-                tv_period.setText(Utils.periodToTimeCoverter(null, SubjectList.get(getPosition())));
-            } else if (getPosition() == 6) {
-                tv_period.setText(Utils.periodToTimeCoverter(SubjectList.get(getPosition()), null));
+            //TODO tutorial
+            if (position == 0) {
+                tv_period.setText(Utils.periodToTimeCoverter(null, SubjectList.get(position)));
+            } else if (position == 6) {
+                tv_period.setText(Utils.periodToTimeCoverter(SubjectList.get(position), null));
             }else{
-                tv_period.setText(Utils.periodToTimeCoverter(SubjectList.get(getPosition()-1),SubjectList.get(getPosition())));
+                tv_period.setText(Utils.periodToTimeCoverter(SubjectList.get(position-1),SubjectList.get(position)));
             }
         }
     }
