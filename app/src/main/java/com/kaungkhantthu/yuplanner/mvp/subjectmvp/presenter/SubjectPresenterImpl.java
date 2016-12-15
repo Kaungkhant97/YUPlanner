@@ -45,7 +45,7 @@ public class SubjectPresenterImpl implements SubjectPresenter {
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         List<Subject> subjectList = subjectModel.getSubjectListFromCache(calendar.get(Calendar.DAY_OF_WEEK));
         subjectList = formatList(subjectList, day);
-        if (subjectList == null) {
+        if (subjectList == null || subjectList.size() < 1) {
             subjectView.showErrorView();
 
         } else {

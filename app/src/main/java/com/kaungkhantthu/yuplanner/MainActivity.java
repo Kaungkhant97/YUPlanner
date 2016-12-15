@@ -1,14 +1,22 @@
 package com.kaungkhantthu.yuplanner;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
+import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.EventDecorator;
 import com.kaungkhantthu.yuplanner.recyclerView.TabPagerAdapter;
 import com.kaungkhantthu.yuplanner.data.entity.Event;
@@ -16,6 +24,7 @@ import com.kaungkhantthu.yuplanner.mvp.mainmvp.MainPresenter;
 import com.kaungkhantthu.yuplanner.mvp.mainmvp.MainPresenterImpl;
 import com.kaungkhantthu.yuplanner.mvp.mainmvp.MainView;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
+import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
 import com.kaungkhantthu.yuplanner.utils.Utils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -39,9 +48,11 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     TabLayout tabLayout;
     Toolbar toolbar;
     ViewPager viewPager;
+
     MaterialCalendarView calendarView;
     private MainPresenter mainpresenter;
     private TabPagerAdapter pageradapter;
+    public FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +108,13 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        fab =(FloatingActionButton)findViewById(R.id.fab);
         this.mainpresenter = MainPresenterImpl.getInstance(this);
-        mainpresenter.init();
+        mainpresenter.init(this);
 
-        Log.e("init: ", "inittt");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
+        }
         setupToolbar();
         setupViewPager();
         setupCalendarView();
@@ -166,6 +180,25 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_settings){
+            SPrefHelper.putBoolean(this, Constants.FIRSTTIME,false);
+            startActivity(new Intent(this,LauncherActivity.class));
+        }
+
+        return true;
+
+    }
+
+    @Override
     public void BindToCalendar(List<Event> events) throws ParseException {
         int color = getResources().getColor(R.color.dark);
         ArrayList<CalendarDay> eventdateList = new ArrayList();
@@ -173,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             Date d = Utils.formatDate(e.getPublishedDate());
             eventdateList.add(new CalendarDay(d));
         }
+        calendarView.setSelectedDate(Calendar.getInstance());
         calendarView.addDecorator(new EventDecorator(color, eventdateList));
 
     }

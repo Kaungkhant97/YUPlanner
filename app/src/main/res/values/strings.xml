@@ -28,31 +28,56 @@
         <item>DEC</item>
     </string-array>
 
-    <string-array name="major_list">
+    <string-array name="mmajor_list">
 
         <item>major</item>
-        <item>Myan</item>
-        <item>Eng</item>
-        <item>Maths</item>
-        <item>Chem</item>
-        <item>Phy</item>
-        <item>Bot</item>
-        <item>Zool</item>
-        <item>Phil</item>
-        <item>Psycho</item>
         <item>Arch</item>
         <item>ANTH</item>
-        <item>IR</item>
-        <item>PS</item>
-        <item>L</item>
-        <item>Hist</item>
+        <item>Bot</item>
+        <item>Chem</item>
+        <item>CS</item>
+        <item>Eng</item>
         <item>Geog</item>
         <item>Geol</item>
-        <item>CS</item>
+        <item>Hist</item>
         <item>IC</item>
-        <item>OS</item>
+        <item>IR</item>
+        <item>L</item>
         <item>LIS</item>
-        <item>MS</item>
+        <item>Maths</item>
+        <item>Myan</item>
+        <item>OS</item>
+        <item>Phil</item>
+        <item>Phy</item>
+        <item>PS</item>
+        <item>Psycho</item>
+        <item>Zool</item>
+
+    </string-array>
+
+    <string-array name="major_list">
+        <item>major</item>
+        <item>Anthropology</item>
+        <item>Archaeology</item>
+        <item>Botany</item>
+        <item>Chemistry</item>
+        <item>Computer Science</item>
+        <item>English</item>
+        <item>Geography</item>
+        <item>Geology</item>
+        <item>History</item>
+        <item>Industrial Chemistry</item>
+        <item>International Relations</item>
+        <item>Law</item>
+        <item>Library and Information Studies</item>
+        <item>Mathematics</item>
+        <item>Myanmar</item>
+        <item>Oriental Studies</item>
+        <item>Philosophy</item>
+        <item>Physics</item>
+        <item>Political Science</item>
+        <item>Psychology</item>
+        <item>Zoology</item>
 
     </string-array>
 
@@ -63,6 +88,13 @@
         <item>3rd</item>
         <item>4th</item>
     </string-array>
+    <string-array name="myear_list">
+        <item>year</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
     <string-array name="class_list">]
         <item>class</item>
@@ -71,6 +103,14 @@
         <item>Class B</item>
         <item>Class C</item>
         <item>Class D</item>
+    </string-array>
+    <string-array name="mclass_list">]
+        <item>class</item>
+        <item>1111</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

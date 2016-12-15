@@ -2,6 +2,7 @@ package com.kaungkhantthu.yuplanner.mvp.subjectmvp.View;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.data.entity.Timetable;
@@ -55,6 +57,8 @@ public class SubjectFragment extends Fragment implements SubjectView {
         recyler_subjects = (RecyclerView) view.findViewById(R.id.recycler_subjects);
         errorlayout = (FrameLayout) view.findViewById(R.id.errorLayout);
         errorbtn = (Button) view.findViewById(R.id.btn_error);
+        FloatingActionButton fab = ((MainActivity) getActivity()).fab;
+        fab.hide();
         initRecycler();
         init();
         return view;

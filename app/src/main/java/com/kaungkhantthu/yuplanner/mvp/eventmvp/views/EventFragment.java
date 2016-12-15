@@ -2,6 +2,7 @@ package com.kaungkhantthu.yuplanner.mvp.eventmvp.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.recyclerView.EventAdapter;
 import com.kaungkhantthu.yuplanner.data.entity.Event;
@@ -48,6 +50,8 @@ public class EventFragment extends Fragment implements EventView {
         recycler_event = (RecyclerView) v.findViewById(R.id.recycler_event);
         errorlayout = (FrameLayout) v.findViewById(R.id.errorLayout);
         errorbtn = (Button) v.findViewById(R.id.btn_error);
+        FloatingActionButton fab = ((MainActivity) getActivity()).fab;
+        fab.hide();
         initRecycler();
         init();
         return v;

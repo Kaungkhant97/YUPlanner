@@ -37,7 +37,7 @@ public class EventPresenterImpl implements EventPresenter {
         this.eventModel =  EventModelImpl.getInstance();
         Calendar calendar = DateChangeNotifier.getInstance().getcurrentSelectedDate();
         List<Event> eventList = eventModel.getEventsFor(calendar.getTime());
-        if(eventList == null){
+        if(eventList == null || eventList.size() < 1){
             eventView.showErrorView();
 
         }else{
