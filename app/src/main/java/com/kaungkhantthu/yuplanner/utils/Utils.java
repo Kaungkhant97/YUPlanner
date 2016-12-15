@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
+import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 
 import java.text.ParseException;
@@ -18,6 +19,8 @@ import java.util.HashMap;
 public class Utils {
     private static final String ISOFORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private static HashMap<Object, Object> periodTimeMap;
+    private static HashMap<String, String> majorMap;
+    private static HashMap<String, String> classMap;
 
     public static String formatDate(Date d) {
 
@@ -71,6 +74,40 @@ public class Utils {
         periodTimeMap.put(4, "1:30-2:30");
         periodTimeMap.put(5, "2:30-3:30");
         periodTimeMap.put(6, "3:30-4:30");
+    }
+
+    public static String yearConverter(String year, Context c) {
+        initYearMap(c);
+        return majorMap.get(year);
+    }
+
+    private static void initYearMap(Context c) {
+        majorMap = new HashMap<>();
+
+        String[] valueYear = c.getResources().getStringArray(R.array.year_list);
+        String[] keyYear = c.getResources().getStringArray(R.array.myear_list);
+        for (int i = 0; i < keyYear.length; i++) {
+            majorMap.put(keyYear[i], valueYear[i]);
+        }
+
+
+    }
+
+    public static String classConverter(String mClass, Context c) {
+        initclassMap(c);
+        return classMap.get(mClass);
+    }
+
+    private static void initclassMap(Context c) {
+        classMap = new HashMap<>();
+
+        String[] valueClass = c.getResources().getStringArray(R.array.class_list);
+        String[] keyClass = c.getResources().getStringArray(R.array.mclass_list);
+        for (int i = 0; i < keyClass.length; i++) {
+            classMap.put(keyClass[i], valueClass[i]);
+        }
+
+
     }
 
 }

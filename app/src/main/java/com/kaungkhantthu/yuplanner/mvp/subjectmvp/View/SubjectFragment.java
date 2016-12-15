@@ -1,5 +1,6 @@
 package com.kaungkhantthu.yuplanner.mvp.subjectmvp.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kaungkhantthu.yuplanner.LauncherActivity;
 import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.TodolistFragment;
@@ -24,7 +27,12 @@ import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectView;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter.SubjectPresenterImpl;
 import com.kaungkhantthu.yuplanner.recyclerView.SubjectAdapter;
+import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
+import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
+import com.kaungkhantthu.yuplanner.utils.Utils;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,20 +55,24 @@ public class SubjectFragment extends Fragment implements SubjectView {
     private FrameLayout errorlayout;
     private Button errorbtn;
     private TextView errotext;
+    private TextView txt_major, txt_year, txt_class;
+    private LinearLayout pathDirectory;
 
     private SubjectFragment() {
 
     }
-    public static SubjectFragment getInstance(){
-        if(subjectFragment == null){
+
+    public static SubjectFragment getInstance() {
+        if (subjectFragment == null) {
             subjectFragment = new SubjectFragment();
         }
         return subjectFragment;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+
     }
 
     @Nullable
@@ -69,10 +81,23 @@ public class SubjectFragment extends Fragment implements SubjectView {
         View view = inflater.inflate(R.layout.fragment_timetable, container, false);
         recyler_subjects = (RecyclerView) view.findViewById(R.id.recycler_subjects);
         errorlayout = (FrameLayout) view.findViewById(R.id.errorLayout);
+        pathDirectory =(LinearLayout)view.findViewById(R.id.path_directory);
         errotext = (TextView) view.findViewById(R.id.errorText);
         errorbtn = (Button) view.findViewById(R.id.btn_error);
+        txt_major = (TextView) view.findViewById(R.id.tv_major);
+        txt_class = (TextView) view.findViewById(R.id.tv_class);
+        txt_year = (TextView) view.findViewById(R.id.tv_year);
         initRecycler();
         init();
+        pathDirectory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SPrefHelper.putBoolean(getContext(), Constants.FIRSTTIME,true);
+                Intent i =new Intent(getActivity(),LauncherActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
         return view;
 
     }
@@ -85,6 +110,17 @@ public class SubjectFragment extends Fragment implements SubjectView {
     }
 
     private void init() {
+        String major = SPrefHelper.getString(getContext(), Constants.MAJOR, "");
+        String year = SPrefHelper.getString(getContext(), Constants.YEAR, "");
+        String mClass = SPrefHelper.getString(getContext(), Constants.CLASS, "");
+
+        mClass = Utils.classConverter(mClass, getActivity());
+        year = Utils.yearConverter(year, getActivity());
+
+
+        txt_class.setText(mClass);
+        txt_year.setText(year);
+        txt_major.setText(major);
         subjectPresenter = new SubjectPresenterImpl(this);
         subjectPresenter.init();
         DateChangeNotifier.getInstance().addNotifyView(this);
