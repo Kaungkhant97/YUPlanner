@@ -8,11 +8,12 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <include layout="@layout/view_directory" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_todo"
         android:layout_width="match_parent"
         android:layout_marginBottom="@dimen/margin_medium_2"
-        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginTop="28dp"
         android:layout_height="match_parent" />
 <include layout="@layout/errormessagelayout"/>
 
