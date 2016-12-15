@@ -9,6 +9,7 @@ import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
+import com.kaungkhantthu.yuplanner.utils.Utils;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -55,6 +56,9 @@ public class MainPresenterImpl implements MainPresenter {
     public void init(Context c) {
         this.eventModel = EventModelImpl.getInstance();
 
+        if(!Utils.isNetworkAvailable(c)){
+            mainview.showSnackBar("Internet Connection Not Available");
+        }
         List<Event> e = Realm.getDefaultInstance().copyFromRealm(eventModel.getAllEventFromCache());
         if (e != null) {
 

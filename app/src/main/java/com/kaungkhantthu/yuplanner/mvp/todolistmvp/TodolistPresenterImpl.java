@@ -31,28 +31,28 @@ public class TodolistPresenterImpl implements TodolistPresenter {
         }
         return todolistPresenter;
     }
+
     @Override
-    public void init(){
-        this.todolistModel =  TodolistModelImpl.getInstance();
+    public void init() {
+        this.todolistModel = TodolistModelImpl.getInstance();
         Calendar calendar = DateChangeNotifier.getInstance().getcurrentSelectedDate();
         List<TodoTask> taskList = new ArrayList<>();
-        taskList =  todolistModel.getTasks(calendar.getTime());
-        if(taskList == null){
+        taskList = todolistModel.getTasks(calendar.getTime());
+        if (taskList == null || taskList.size() < 1) {
             todolistView.showErrorView();
 
-        }else{
+        } else {
             todolistView.showtodoList(taskList);
         }
     }
 
 
-
     @Override
     public void onDateChange(Calendar c) {
-        List<TodoTask> t= todolistModel.getTasks(c.getTime());
-        if(t == null ){
+        List<TodoTask> t = todolistModel.getTasks(c.getTime());
+        if (t == null || t.size() < 1) {
             todolistView.showErrorView();
-        }else{
+        } else {
             todolistView.showtodoList(t);
         }
     }
@@ -63,10 +63,9 @@ public class TodolistPresenterImpl implements TodolistPresenter {
     }
 
 
-
     @Override
     public void onFabClick() {
-       todolistView.showDialog();
+        todolistView.showDialog();
     }
 
     @Override

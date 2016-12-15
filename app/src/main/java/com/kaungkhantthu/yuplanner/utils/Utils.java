@@ -1,5 +1,7 @@
 package com.kaungkhantthu.yuplanner.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
@@ -41,9 +43,9 @@ public class Utils {
     public static String periodToTimeCoverter(Subject prevsubject, Subject subject) {
         initPeriodTimeMap();
         int mperiod;
-        if (prevsubject ==  null){
+        if (prevsubject == null) {
             mperiod = subject.getTimetable().get(0).getPeriod().get(0).getP();
-        }else {
+        } else {
             if (subject.equals(prevsubject)) {
                 mperiod = subject.getTimetable().get(0).getPeriod().get(1).getP();
             } else {
@@ -53,6 +55,11 @@ public class Utils {
         String time = (String) periodTimeMap.get(mperiod);
         return time;
 
+    }
+
+    public static boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     private static void initPeriodTimeMap() {

@@ -161,7 +161,7 @@
             android:lines="3"
             android:padding="8dp" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/tv_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -179,13 +179,13 @@
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/tv_alarm"
             android:buttonTint="@color/orange"
-            android:checked="true" />
+            android:checked="true" />-->
 
         <TextView
             android:id="@+id/btn_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_alarm"
+            android:layout_below="@id/et_note"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"

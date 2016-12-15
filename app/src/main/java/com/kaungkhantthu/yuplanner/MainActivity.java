@@ -5,7 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     private MainPresenter mainpresenter;
     private TabPagerAdapter pageradapter;
     public FloatingActionButton fab;
+    private CoordinatorLayout mainCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        mainCoordinator = (CoordinatorLayout)findViewById(R.id.mainCoordinator);
         fab =(FloatingActionButton)findViewById(R.id.fab);
         this.mainpresenter = MainPresenterImpl.getInstance(this);
         mainpresenter.init(this);
@@ -222,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     @Override
     public void showSnackBar(String s) {
-
+        Snackbar.make(mainCoordinator,s,Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -232,6 +236,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         if (tabLayout.getTabCount() != 3) {
             tabLayout.addTab(tabLayout.newTab().setText("Event"));
             pageradapter.setCount(3);
+            viewPager.setCurrentItem(1);
+            fab.hide();
         }
     }
 
@@ -241,6 +247,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         if (tabLayout.getTabCount() == 3) {
             pageradapter.setCount(2);
             tabLayout.removeTabAt(2);
+            viewPager.setCurrentItem(1);
+            fab.hide();
+
         }
     }
 }

@@ -15,6 +15,6 @@
         android:layout_marginBottom="@dimen/margin_medium_2"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_height="match_parent" />
-
+<include layout="@layout/errormessagelayout"/>
 
 </android.support.design.widget.CoordinatorLayout>

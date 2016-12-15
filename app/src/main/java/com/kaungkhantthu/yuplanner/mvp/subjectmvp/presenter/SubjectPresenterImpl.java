@@ -63,11 +63,17 @@ public class SubjectPresenterImpl implements SubjectPresenter {
         List<Subject> subjects = subjectModel.getSubjectListFromCache(day);
 
         subjects = formatList(subjects, day);
+        if (day == 1 || day == 7) {
+            subjectView.showErrorView("There is no Timetable For this Day");
+        }
+        {
 
-        if (subjects == null) {
-            subjectView.showErrorView();
-        } else {
-            subjectView.showsubjects(subjects);
+            if (subjects == null || subjects.size() < 1) {
+
+                subjectView.showErrorView();
+            } else {
+                subjectView.showsubjects(subjects);
+            }
         }
     }
 
@@ -110,14 +116,14 @@ public class SubjectPresenterImpl implements SubjectPresenter {
 
     private List<Subject> removeUnecessaryDays(List<Subject> subjects, int day) {
         ArrayList<Subject> templist = new ArrayList<>();
-       for(int g=0;g<subjects.size();g++){
-           templist.add(new Subject(subjects.get(g)));
-       }
+        for (int g = 0; g < subjects.size(); g++) {
+            templist.add(new Subject(subjects.get(g)));
+        }
 
-        for (int i=0;i<subjects.size();i++) {
+        for (int i = 0; i < subjects.size(); i++) {
             List<Timetable> timetablelist = subjects.get(i).getTimetable();
-           int size = timetablelist.size();
-            for (int j=0;j<size;j++) {
+            int size = timetablelist.size();
+            for (int j = 0; j < size; j++) {
                 if (timetablelist.get(j).getDay() != day) {
                     List<Timetable> temptimetable = templist.get(i).getTimetable();
 
@@ -132,7 +138,7 @@ public class SubjectPresenterImpl implements SubjectPresenter {
         String major = SPrefHelper.getString(c, Constants.MAJOR, "");
         String mClass = SPrefHelper.getString(c, Constants.CLASS, "");
         String year = SPrefHelper.getString(c, Constants.YEAR, "");
-        subjectModel.getSubjectList(major,year,mClass, new SubjectModelImpl.Callback() {
+        subjectModel.getSubjectList(major, year, mClass, new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {
                 subjectModel.clearSubject();

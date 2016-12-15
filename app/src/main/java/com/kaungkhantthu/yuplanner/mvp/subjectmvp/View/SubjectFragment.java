@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
@@ -43,6 +44,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
     private SubjectAdapter adapter;
     private FrameLayout errorlayout;
     private Button errorbtn;
+    private TextView errotext;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
         View view = inflater.inflate(R.layout.fragment_timetable, container, false);
         recyler_subjects = (RecyclerView) view.findViewById(R.id.recycler_subjects);
         errorlayout = (FrameLayout) view.findViewById(R.id.errorLayout);
+        errotext = (TextView) view.findViewById(R.id.errorText);
         errorbtn = (Button) view.findViewById(R.id.btn_error);
         initRecycler();
         init();
@@ -103,11 +106,22 @@ public class SubjectFragment extends Fragment implements SubjectView {
         Log.e("showErrorView: ", "error in event");
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
+        errorbtn.setVisibility(View.VISIBLE);
+
         errorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 subjectPresenter.requestsubjects(getContext());
             }
         });
+    }
+
+    @Override
+    public void showErrorView(String error) {
+        errorlayout.setVisibility(View.VISIBLE);
+        recyler_subjects.setVisibility(View.GONE);
+        errorbtn.setVisibility(View.GONE);
+
+        errotext.setText(error);
     }
 }

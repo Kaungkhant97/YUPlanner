@@ -17,5 +17,7 @@ public interface SubjectView extends mvpView {
 
     void showsubjects(List<Subject> eventList);
 
+
     void showErrorView();
+    void showErrorView(String errorText);
 }
