@@ -23,7 +23,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
     private ArrayList<Subject> dataList;
     private Context context;
-    private String[] order = {"1st","2nd","3rd","4th","5th","6th","7th","8th"};
+    private String[] order = {"1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th"};
 
     public SubjectAdapter(ArrayList<Subject> subjectArraylist) {
         this.dataList = subjectArraylist;
@@ -88,15 +88,13 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             }
 
             cardview_layout.setBackgroundColor(color);
-            tv_order.setText(position+"");
+            tv_order.setText(order[position]);
             tv_moduleno.setText(subjects.getSubjectId());
             tv_teacher.setText(subjects.getTeachername());
             tv_subject.setText(subjects.getSubjectname());
             //TODO tutorial
             if (position == 0) {
                 tv_period.setText(Utils.periodToTimeCoverter(null, SubjectList.get(position)));
-            } else if (position == 6) {
-                tv_period.setText(Utils.periodToTimeCoverter(SubjectList.get(position), null));
             }else{
                 tv_period.setText(Utils.periodToTimeCoverter(SubjectList.get(position-1),SubjectList.get(position)));
             }
