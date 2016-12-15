@@ -1,10 +1,12 @@
 package com.kaungkhantthu.yuplanner;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 
 import android.app.DatePickerDialog;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
@@ -13,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -69,10 +72,19 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         todoTask = new TodoTask();
     }
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_add_to_do_task, container, false);
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
         btnSubmit = (TextView) view.findViewById(R.id.btn_submit);
         etName = (EditText) view.findViewById(R.id.et_name);

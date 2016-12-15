@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     public void setupViewPager() {
 
-        tabLayout.addTab(tabLayout.newTab().setText("Assignment"));
+        tabLayout.addTab(tabLayout.newTab().setText("Todo list"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
         tabLayout.addTab(tabLayout.newTab().setText("Event"));
         pageradapter = new TabPagerAdapter(getSupportFragmentManager());

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
@@ -65,7 +66,6 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
         initRecycler();
         init();
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +107,7 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
     public void showErrorView() {
         errorLayout.setVisibility(View.VISIBLE);
         recyclerTodolist.setVisibility(View.GONE);
-        errrorText.setText(R.string.errorMessageTodo);
+        errrorText.setText("Press + To Create A Task");
     }
 
     @Override

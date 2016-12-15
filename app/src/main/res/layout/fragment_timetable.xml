@@ -11,4 +11,5 @@
         android:layout_marginBottom="@dimen/margin_medium_2"
         android:layout_marginTop="@dimen/margin_medium"/>
     <include layout="@layout/errorlayout"/>
+
 </FrameLayout>
