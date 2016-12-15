@@ -3,29 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="@dimen/margin_medium">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/margin_medium"
+    app:cardElevation="8dp"
+    android:layout_marginLeft="@dimen/margin_medium_3"
+    android:layout_marginRight="@dimen/margin_medium_3">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="230dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/sideColor"
             android:layout_width="10dp"
-            android:layout_height="230dp"
-            android:background="@color/accent" />
+            android:layout_height="match_parent"
+            android:background="@color/primary" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/img_cover"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="165dp"
                 android:elevation="8dp"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
@@ -34,28 +38,31 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small">
+                android:layout_gravity="bottom"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_small">
 
                 <TextView
                     android:id="@+id/txt_eventTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_medium_2"
-                    android:textSize="@dimen/text_heading_1x"
+                    android:textStyle="bold"
                     tools:text="Title" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/margin_small">
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_below="@id/txt_eventTitle"
+                    android:paddingBottom="2dp">
 
                     <TextView
                         android:id="@+id/txt_eventDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_medium_2"
-                        android:textSize="18sp"
                         tools:text="1-12-12" />
 
                     <TextView
@@ -63,23 +70,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_medium"
                         android:text="."
-                        android:textColor="@color/accent"
-                        android:textSize="60sp" />
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:id="@+id/txt_eventTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_medium"
-                        android:textSize="18sp"
                         tools:text="12:12" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:id="@+id/iv_detail"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="16dp"

@@ -6,7 +6,10 @@ import android.app.DatePickerDialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistModel;
@@ -47,10 +49,10 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
     private EditText etDate;
     private EditText etNote;
     private CheckBox cbAlarm;
-    private ImageView btnEdit;
-    private ImageView btnDelete;
-    private ImageView btnFinished;
-    private ImageView btnSetAlarm;
+    private ImageView btnClose;
+    private TextInputLayout tilDate;
+    private TextInputLayout tilTime;
+    private TextInputLayout tilName;
 
     int gyear;
     int gmonth;
@@ -79,6 +81,10 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         etDate = (EditText) view.findViewById(R.id.et_date);
         etNote = (EditText) view.findViewById(R.id.et_note);
         cbAlarm = (CheckBox) view.findViewById(R.id.cb_alarm);
+        btnClose = (ImageView) view.findViewById(R.id.btn_close);
+        tilTime = (TextInputLayout) view.findViewById(R.id.til_time);
+        tilDate = (TextInputLayout) view.findViewById(R.id.til_date);
+        tilName = (TextInputLayout) view.findViewById(R.id.til_name);
 
         btnSubmit.setOnClickListener(this);
         etTime.setOnClickListener(this);
@@ -87,10 +93,72 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         etTime.setOnKeyListener(null);
         etDate.setFocusable(false);
         etDate.setOnKeyListener(null);
+        btnClose.setOnClickListener(this);
+
         etTime.setOnFocusChangeListener(this);
 
         etDate.setOnFocusChangeListener(this);
+
+        etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().trim().length() > 0) {
+                    tilName.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().trim().length() > 0) {
+                    tilTime.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().trim().length() > 0) {
+                    tilDate.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return view;
+
+
     }
 
     @Override
@@ -106,6 +174,8 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
             case R.id.et_time:
                 showTimePicker();
                 break;
+            case R.id.btn_close:
+                dismiss();
         }
     }
 
@@ -157,22 +227,40 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
     }
 
     private void saveToDoTask() {
-        if (etTime.getText().toString() == null || etDate.getText().toString() == null) {
-            Toast.makeText(getContext(), "please complete the blanks", Toast.LENGTH_SHORT).show();
-        } else {
+        String name, time, date, note;
+        name = etName.getText().toString();
+        time = etTime.getText().toString();
+        date = etDate.getText().toString();
+        note = etNote.getText().toString();
 
-            todoTask.setName(etName.getText().toString());
-            todoTask.setTime(etTime.getText().toString());
-            todoTask.setDate(etDate.getText().toString());
-            todoTask.setNote(etNote.getText().toString());
+        if (name.isEmpty() || time.isEmpty() || date.isEmpty() || note.isEmpty()) {
+            if (name.isEmpty()) {
+                tilName.setError("Name cannot be empty");
+            }
+            if (time.isEmpty()) {
+                tilTime.setError("Time cannot be empty");
+            }
+            if (date.isEmpty()) {
+                tilDate.setError("Date cannot be empty");
+            }
+            if (note.isEmpty()) {
+                etNote.setError("Note cannot be empty");
+            }
+
+        } else {
+            todoTask.setName(name);
+            todoTask.setTime(time);
+            todoTask.setDate(date);
+            todoTask.setNote(note);
             todoTask.setId(todoTask.hashCode() + "");
             todoTask.setFormattedDate(getPublishedDate());
             todolistModel.saveTask(todoTask);
             listener.onSubmit();
             dismiss();
         }
-
     }
+
+
 
     @Override
     public void onFocusChange(View view, boolean b) {
@@ -197,8 +285,10 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
 
         return c.getTime();
     }
-
     public interface submitButtonClickListener {
         void onSubmit();
     }
 }
+
+
+

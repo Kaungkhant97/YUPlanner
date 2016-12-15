@@ -23,6 +23,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
     private ArrayList<Subject> dataList;
     private Context context;
+    private String[] order = {"1st","2nd","3rd","4th","5th","6th","7th","8th"};
 
     public SubjectAdapter(ArrayList<Subject> subjectArraylist) {
         this.dataList = subjectArraylist;

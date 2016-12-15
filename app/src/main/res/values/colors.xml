@@ -2,7 +2,7 @@
 <resources>
     <color name="primary">#72baac</color>
     <color name="primary_dark">#455A64</color>
-    <color name="primary_light">#CFD8DC</color>
+    <color name="primary_light">#76c2b3</color>
     <color name="accent">#607D8B</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#000000</color>
@@ -12,4 +12,5 @@
 
     <color name="orange">#ee7546</color>
     <color name="whitish">#f5f5f5</color>
+    <color name="white_transparent">#ddffffff</color>
 </resources>

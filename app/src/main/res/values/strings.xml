@@ -28,7 +28,53 @@
         <item>DEC</item>
     </string-array>
 
+    <string-array name="major_list">
+
+        <item>major</item>
+        <item>Myan</item>
+        <item>Eng</item>
+        <item>Maths</item>
+        <item>Chem</item>
+        <item>Phy</item>
+        <item>Bot</item>
+        <item>Zool</item>
+        <item>Phil</item>
+        <item>Psycho</item>
+        <item>Arch</item>
+        <item>ANTH</item>
+        <item>IR</item>
+        <item>PS</item>
+        <item>L</item>
+        <item>Hist</item>
+        <item>Geog</item>
+        <item>Geol</item>
+        <item>CS</item>
+        <item>IC</item>
+        <item>OS</item>
+        <item>LIS</item>
+        <item>MS</item>
+
+    </string-array>
+
+    <string-array name="year_list">
+        <item>year</item>
+        <item>1st</item>
+        <item>2nd</item>
+        <item>3rd</item>
+        <item>4th</item>
+    </string-array>
+
+    <string-array name="class_list">]
+        <item>class</item>
+        <item>Hons</item>
+        <item>Class A</item>
+        <item>Class B</item>
+        <item>Class C</item>
+        <item>Class D</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_text">Welcome dear student. \n To let us help with your time, please \n choose your major, year and class.</string>
 
 </resources>
