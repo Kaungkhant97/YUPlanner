@@ -89,9 +89,14 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         btnSubmit.setOnClickListener(this);
         etTime.setOnClickListener(this);
         etDate.setOnClickListener(this);
+        etTime.setFocusable(false);
+        etTime.setOnKeyListener(null);
+        etDate.setFocusable(false);
+        etDate.setOnKeyListener(null);
         btnClose.setOnClickListener(this);
 
         etTime.setOnFocusChangeListener(this);
+
         etDate.setOnFocusChangeListener(this);
 
         etName.addTextChangedListener(new TextWatcher() {
@@ -161,6 +166,7 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         switch (view.getId()) {
             case R.id.btn_submit:
                 saveToDoTask();
+
                 break;
             case R.id.et_date:
                 showDatePicker();
@@ -254,6 +260,8 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
         }
     }
 
+
+
     @Override
     public void onFocusChange(View view, boolean b) {
         switch (view.getId()) {
@@ -277,8 +285,10 @@ public class AddTodolistDialogFragment extends DialogFragment implements View.On
 
         return c.getTime();
     }
-
     public interface submitButtonClickListener {
         void onSubmit();
     }
 }
+
+
+

@@ -2,6 +2,7 @@ package com.kaungkhantthu.yuplanner.mvp.subjectmvp.View;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.data.entity.Timetable;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.presenter.EventPresenterImpl;
+import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectView;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter.SubjectPresenterImpl;
 import com.kaungkhantthu.yuplanner.recyclerView.SubjectAdapter;
@@ -41,6 +44,12 @@ public class SubjectFragment extends Fragment implements SubjectView {
     private FrameLayout errorlayout;
     private Button errorbtn;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,6 +57,8 @@ public class SubjectFragment extends Fragment implements SubjectView {
         recyler_subjects = (RecyclerView) view.findViewById(R.id.recycler_subjects);
         errorlayout = (FrameLayout) view.findViewById(R.id.errorLayout);
         errorbtn = (Button) view.findViewById(R.id.btn_error);
+        FloatingActionButton fab = ((MainActivity) getActivity()).fab;
+        fab.hide();
         initRecycler();
         init();
         return view;
@@ -69,13 +80,19 @@ public class SubjectFragment extends Fragment implements SubjectView {
 
     @Override
     public void onDateChange(Calendar c) {
-        Log.e(TAG, "onDateChange: " );
+        Log.e(TAG, "onDateChange: ");
 
         subjectPresenter.onDateChange(c);
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
     public void showsubjects(List<Subject> subjectList) {
+        Log.e(TAG, "showsubjects: ");
         errorlayout.setVisibility(View.GONE);
         recyler_subjects.setVisibility(View.VISIBLE);
         adapter.clearSubjects();
@@ -85,7 +102,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
 
     @Override
     public void showErrorView() {
-        Log.e( "showErrorView: ", "error in event");
+        Log.e("showErrorView: ", "error in event");
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
         errorbtn.setOnClickListener(new View.OnClickListener() {

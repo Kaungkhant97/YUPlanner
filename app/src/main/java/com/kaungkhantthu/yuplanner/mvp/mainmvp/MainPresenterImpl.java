@@ -1,10 +1,14 @@
 package com.kaungkhantthu.yuplanner.mvp.mainmvp;
 
+import android.content.Context;
+
 import com.kaungkhantthu.yuplanner.data.entity.Event;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModel;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
+import com.kaungkhantthu.yuplanner.utils.Constants;
+import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -40,15 +44,15 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onDateChange(Calendar c) {
         List<Event> eventlist = eventModel.getEventsFor(c.getTime());
-        if(eventlist.size() == 0){
+        if (eventlist.size() == 0) {
             mainview.hideventtab();
-        }else{
+        } else {
             mainview.showeventtab();
         }
     }
 
     @Override
-    public void init() {
+    public void init(Context c) {
         this.eventModel = EventModelImpl.getInstance();
 
         List<Event> e = Realm.getDefaultInstance().copyFromRealm(eventModel.getAllEventFromCache());
@@ -62,14 +66,17 @@ public class MainPresenterImpl implements MainPresenter {
         }
 
         this.subjectModel = SubjectModelImpl.getInstance();
-        requestSubjectFromServer();
+        requestSubjectFromServer(c);
 
         requestEventsFromServer();
 
     }
 
-    private void requestSubjectFromServer() {
-        subjectModel.getSubjectList("CS", "4", "", new SubjectModelImpl.Callback() {
+    private void requestSubjectFromServer(Context c) {
+        String major = SPrefHelper.getString(c, Constants.MAJOR, "");
+        String mClass = SPrefHelper.getString(c, Constants.CLASS, "");
+        String year = SPrefHelper.getString(c, Constants.YEAR, "");
+        subjectModel.getSubjectList(major, year, mClass, new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {
                 subjectModel.clearSubject();
