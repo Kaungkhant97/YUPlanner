@@ -11,8 +11,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
+
+import io.realm.Realm;
 
 /**
  * Created by Administrator's user on 14-Dec-16.
@@ -32,12 +35,13 @@ public class LauncherActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
         }
 
-        boolean firstTime = SPrefHelper.getBoolean(this, Constants.FIRSTTIME, false);
+        final boolean firstTime = SPrefHelper.getBoolean(this, Constants.FIRSTTIME, true);
 
-
-        if (!firstTime ) {
-            SPrefHelper.putBoolean(this, Constants.FIRSTTIME, true);
+        if(!firstTime){
+            startActivity(new Intent(this,MainActivity.class));
         }
+
+
         sp_major = (Spinner) findViewById(R.id.sp_major);
         sp_class = (Spinner) findViewById(R.id.sp_class);
         sp_year = (Spinner) findViewById(R.id.sp_year);
@@ -66,6 +70,12 @@ public class LauncherActivity extends AppCompatActivity {
                     SPrefHelper.putString(LauncherActivity.this, Constants.MAJOR, majorarray[selectedmajor]);
                     SPrefHelper.putString(LauncherActivity.this, Constants.CLASS, classarray[selectedclass]);
                     SPrefHelper.putString(LauncherActivity.this, Constants.YEAR, yeararray[selectedyear]);
+                    SPrefHelper.putBoolean(LauncherActivity.this, Constants.FIRSTTIME, false);
+
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.beginTransaction();
+                    realm.where(Subject.class).findAll().deleteAllFromRealm();
+                    realm.commitTransaction();
                     Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
                     startActivity(intent);
 

@@ -1,5 +1,6 @@
 package com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.kaungkhantthu.yuplanner.data.entity.Event;
@@ -9,7 +10,9 @@ import com.kaungkhantthu.yuplanner.data.entity.period;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModel;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectView;
+import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
+import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -125,8 +128,11 @@ public class SubjectPresenterImpl implements SubjectPresenter {
         return templist;
     }
 
-    public void requestsubjects() {
-        subjectModel.getSubjectList("CS", "4", "", new SubjectModelImpl.Callback() {
+    public void requestsubjects(Context c) {
+        String major = SPrefHelper.getString(c, Constants.MAJOR, "");
+        String mClass = SPrefHelper.getString(c, Constants.CLASS, "");
+        String year = SPrefHelper.getString(c, Constants.YEAR, "");
+        subjectModel.getSubjectList(major,year,mClass, new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {
                 subjectModel.clearSubject();

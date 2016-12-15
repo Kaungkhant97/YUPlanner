@@ -153,6 +153,13 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                if(tab.getPosition() == 0 )
+                {
+                    fab.show();
+                }
+                else{
+                    fab.hide();
+                }
             }
 
             @Override
@@ -190,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_settings){
-            SPrefHelper.putBoolean(this, Constants.FIRSTTIME,false);
+            SPrefHelper.putBoolean(this, Constants.FIRSTTIME,true);
             startActivity(new Intent(this,LauncherActivity.class));
         }
 

@@ -50,8 +50,6 @@ public class EventFragment extends Fragment implements EventView {
         recycler_event = (RecyclerView) v.findViewById(R.id.recycler_event);
         errorlayout = (FrameLayout) v.findViewById(R.id.errorLayout);
         errorbtn = (Button) v.findViewById(R.id.btn_error);
-        FloatingActionButton fab = ((MainActivity) getActivity()).fab;
-        fab.hide();
         initRecycler();
         init();
         return v;

@@ -57,8 +57,6 @@ public class SubjectFragment extends Fragment implements SubjectView {
         recyler_subjects = (RecyclerView) view.findViewById(R.id.recycler_subjects);
         errorlayout = (FrameLayout) view.findViewById(R.id.errorLayout);
         errorbtn = (Button) view.findViewById(R.id.btn_error);
-        FloatingActionButton fab = ((MainActivity) getActivity()).fab;
-        fab.hide();
         initRecycler();
         init();
         return view;
@@ -108,7 +106,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
         errorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subjectPresenter.requestsubjects();
+                subjectPresenter.requestsubjects(getContext());
             }
         });
     }

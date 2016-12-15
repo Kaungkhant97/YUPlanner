@@ -45,7 +45,6 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
         View v = inflater.inflate(R.layout.fragment_todolist, container, false);
 
         fab = ((MainActivity) getActivity()).fab;
-        fab.show();
         recyclerTodolist = (RecyclerView) v.findViewById(R.id.recycler_todo);
         initRecycler();
         init();
