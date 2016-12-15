@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/view_directory" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_subjects"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/margin_medium_2"
-        android:layout_marginTop="@dimen/margin_medium"/>
+        android:layout_marginTop="28dp"/>
     <include layout="@layout/errorlayout"/>
 
 </FrameLayout>
