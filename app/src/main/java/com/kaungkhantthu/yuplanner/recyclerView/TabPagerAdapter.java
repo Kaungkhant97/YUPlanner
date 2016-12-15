@@ -13,6 +13,13 @@ import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectFragment;
  */
 
 public class TabPagerAdapter extends FragmentPagerAdapter{
+    public void setCount(int count) {
+        this.count = count;
+        notifyDataSetChanged();
+    }
+
+    private int count;
+
     public TabPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -31,6 +38,6 @@ public class TabPagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public int getCount() {
-        return 3;
+        return this.count;
     }
 }

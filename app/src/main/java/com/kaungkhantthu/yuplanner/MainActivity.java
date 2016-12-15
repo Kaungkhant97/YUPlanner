@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         Log.e(TAG, "onCreate: ");
         init();
 
+
     }
 
     @Override
@@ -230,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
         if (tabLayout.getTabCount() != 3) {
             tabLayout.addTab(tabLayout.newTab().setText("Event"));
+            pageradapter.setCount(3);
         }
     }
 
@@ -237,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     public void hideventtab() {
         Log.e(TAG, "hideventtab: "+tabLayout.getTabCount() );
         if (tabLayout.getTabCount() == 3) {
+            pageradapter.setCount(2);
             tabLayout.removeTabAt(2);
         }
     }
