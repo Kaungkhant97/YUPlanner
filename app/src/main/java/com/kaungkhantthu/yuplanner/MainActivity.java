@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.EventDecorator;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     private TabPagerAdapter pageradapter;
     public FloatingActionButton fab;
     private CoordinatorLayout mainCoordinator;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         fab =(FloatingActionButton)findViewById(R.id.fab);
         this.mainpresenter =new MainPresenterImpl(this);
         mainpresenter.init(this);
-
+        if(!BuildConfig.DEBUG){
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
         }
