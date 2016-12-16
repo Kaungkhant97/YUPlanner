@@ -47,7 +47,7 @@
         <item>Maths</item>
         <item>Myan</item>
         <item>OS</item>
-        <item>Phil</item>
+        <item>Philo</item>
         <item>Phy</item>
         <item>PS</item>
         <item>Psycho</item>
@@ -101,16 +101,12 @@
         <item>Hons</item>
         <item>Class A</item>
         <item>Class B</item>
-        <item>Class C</item>
-        <item>Class D</item>
     </string-array>
     <string-array name="mclass_list">]
         <item>class</item>
         <item>1111</item>
         <item>0</item>
         <item>1</item>
-        <item>2</item>
-        <item>3</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

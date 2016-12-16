@@ -1,6 +1,7 @@
 package com.kaungkhantthu.yuplanner;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
@@ -19,7 +21,9 @@ import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenter;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenterImpl;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistView;
 import com.kaungkhantthu.yuplanner.recyclerView.ToDoAdapter;
+import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
+import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +43,7 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
     private ToDoAdapter adapter;
     private FrameLayout errorLayout;
     private TextView errrorText;
+    private LinearLayout pathDirectory;
 
     public TodolistFragment() {
 
@@ -60,11 +65,21 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
         fab = ((MainActivity) getActivity()).fab;
         recyclerTodolist = (RecyclerView) v.findViewById(R.id.recycler_todo);
         errorLayout = (FrameLayout) v.findViewById(R.id.errorLayout);
+        pathDirectory =(LinearLayout)v.findViewById(R.id.path_directory);
         errrorText = (TextView)v.findViewById(R.id.errorText);
         errorLayout.setVisibility(View.GONE);
 
         initRecycler();
         init();
+        pathDirectory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SPrefHelper.putBoolean(getContext(), Constants.FIRSTTIME,true);
+                Intent i =new Intent(getActivity(),LauncherActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
