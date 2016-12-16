@@ -49,11 +49,13 @@ public class EventFragment extends Fragment implements EventView {
 
     }
 
-    private EventFragment() {
+    public EventFragment() {
 
     }
-    public static EventFragment getInstance(){
-        if(eventFragment == null){
+
+
+    public static EventFragment getInstance() {
+        if (eventFragment == null) {
             eventFragment = new EventFragment();
         }
         return eventFragment;

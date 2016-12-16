@@ -45,7 +45,7 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
     private TextView errrorText;
     private LinearLayout pathDirectory;
 
-    private TodolistFragment() {
+    public TodolistFragment() {
 
     }
     public static TodolistFragment getInstance(){

@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+def versionMajor = 0
+def versionMinor = 1
+def versionPatch = 1
 
+def versionBuild = 01
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -8,9 +12,17 @@ android {
         applicationId "com.kaungkhantthu.yuplanner"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            storeFile file("YuPlannerRelease.jks")
+            storePassword YUPLANNER_PASSWORD
+            keyAlias YUPLANNER_NAME
+            keyPassword YUPLANNER_PASSWORD
+        }
     }
     buildTypes {
         debug {
@@ -23,7 +35,8 @@ android {
             minifyEnabled true
             debuggable false
             buildConfigField 'String', 'API_URL', '"ancient-basin-31535.herokuapp.com"';
-
+            signingConfig signingConfigs.release
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         barnyar {
@@ -34,6 +47,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 repositories {
     maven {
