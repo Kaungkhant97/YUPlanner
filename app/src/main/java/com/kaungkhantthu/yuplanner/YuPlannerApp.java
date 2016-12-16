@@ -16,10 +16,12 @@ public class YuPlannerApp extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                        .build());
+        if(BuildConfig.DEBUG) {
+            Stetho.initialize(
+                    Stetho.newInitializerBuilder(this)
+                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                            .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                            .build());
+        }
     }
 }

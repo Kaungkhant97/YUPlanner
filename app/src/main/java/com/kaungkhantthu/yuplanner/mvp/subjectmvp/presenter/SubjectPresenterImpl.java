@@ -57,14 +57,15 @@ public class SubjectPresenterImpl implements SubjectPresenter {
         List<Subject> subjects = subjectModel.getSubjectListFromCache(day);
 
         subjects = formatList(subjects, day);
-        if (day == 1 || day == 7) {
-            subjectView.showErrorView("No Timetable for today");
-        }
+
         {
 
             if (subjects == null || subjects.size() < 1) {
-
-                subjectView.showErrorView();
+                if (day == 1 || day == 7) {
+                    subjectView.showErrorView("No Timetable for today");
+                }else{
+                    subjectView.showErrorView();
+                }
             } else {
                 subjectView.showsubjects(subjects);
             }

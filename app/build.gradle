@@ -28,6 +28,8 @@ android {
         debug {
             debuggable true
             minifyEnabled false
+            applicationIdSuffix '.debug'
+            versionNameSuffix ' - Debug'
             buildConfigField 'String', 'API_URL', '"ancient-basin-31535.herokuapp.com"';
 
         }

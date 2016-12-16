@@ -167,6 +167,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
 
     @Override
     public void showErrorView(String error) {
+        Log.e(TAG, "showErrorView: btn hide");
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
         errorbtn.setVisibility(View.GONE);
