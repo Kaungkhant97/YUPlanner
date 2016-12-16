@@ -58,7 +58,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
     private TextView txt_major, txt_year, txt_class;
     private LinearLayout pathDirectory;
 
-    private SubjectFragment() {
+    public SubjectFragment() {
 
     }
 
