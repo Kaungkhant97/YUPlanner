@@ -28,15 +28,9 @@ public class LauncherActivity extends AppCompatActivity {
     private TextView txt_btnSubmit;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_screen);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
-        }
-
+    protected void onStart() {
+        super.onStart();
         final boolean firstTime = SPrefHelper.getBoolean(this, Constants.FIRSTTIME, true);
-
         if(!firstTime){
             Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -45,6 +39,19 @@ public class LauncherActivity extends AppCompatActivity {
             finish();
 
         }
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_start_screen);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
+        }
+
+
+
 
 
         sp_major = (Spinner) findViewById(R.id.sp_major);

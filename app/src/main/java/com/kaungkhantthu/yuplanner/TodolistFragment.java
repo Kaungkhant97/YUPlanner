@@ -24,6 +24,7 @@ import com.kaungkhantthu.yuplanner.recyclerView.ToDoAdapter;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
+import com.kaungkhantthu.yuplanner.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,6 +45,9 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
     private FrameLayout errorLayout;
     private TextView errrorText;
     private LinearLayout pathDirectory;
+    private TextView txt_major;
+    private TextView txt_class;
+    private TextView txt_year;
 
     public TodolistFragment() {
 
@@ -68,6 +72,16 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
         pathDirectory =(LinearLayout)v.findViewById(R.id.path_directory);
         errrorText = (TextView)v.findViewById(R.id.errorText);
         errorLayout.setVisibility(View.GONE);
+        pathDirectory =(LinearLayout)v.findViewById(R.id.path_directory);
+        pathDirectory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SPrefHelper.putBoolean(getContext(), Constants.FIRSTTIME,true);
+                Intent i =new Intent(getActivity(),LauncherActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
 
         initRecycler();
         init();
@@ -87,8 +101,26 @@ public class TodolistFragment extends Fragment implements TodolistView, AddTodol
                 presenter.onFabClick();
             }
         });
-
+       initTopBar(v);
         return v;
+    }
+
+    private void initTopBar(View v) {
+        txt_major = (TextView) v.findViewById(R.id.tv_major);
+        txt_class = (TextView) v.findViewById(R.id.tv_class);
+        txt_year = (TextView) v.findViewById(R.id.tv_year);
+
+        String major = SPrefHelper.getString(getContext(), Constants.MAJOR, "");
+        String year = SPrefHelper.getString(getContext(), Constants.YEAR, "");
+        String mClass = SPrefHelper.getString(getContext(), Constants.CLASS, "");
+
+        mClass = Utils.classConverter(mClass, getActivity());
+        year = Utils.yearConverter(year, getActivity());
+
+
+        txt_class.setText(mClass);
+        txt_year.setText(year);
+        txt_major.setText(major);
     }
 
     private void initRecycler() {

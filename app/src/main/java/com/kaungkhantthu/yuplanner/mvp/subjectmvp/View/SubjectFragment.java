@@ -81,14 +81,13 @@ public class SubjectFragment extends Fragment implements SubjectView {
         View view = inflater.inflate(R.layout.fragment_timetable, container, false);
         recyler_subjects = (RecyclerView) view.findViewById(R.id.recycler_subjects);
         errorlayout = (FrameLayout) view.findViewById(R.id.errorLayout);
-        pathDirectory =(LinearLayout)view.findViewById(R.id.path_directory);
+
         errotext = (TextView) view.findViewById(R.id.errorText);
         errorbtn = (Button) view.findViewById(R.id.btn_error);
-        txt_major = (TextView) view.findViewById(R.id.tv_major);
-        txt_class = (TextView) view.findViewById(R.id.tv_class);
-        txt_year = (TextView) view.findViewById(R.id.tv_year);
+
         initRecycler();
         init();
+        pathDirectory =(LinearLayout)view.findViewById(R.id.path_directory);
         pathDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,18 +97,15 @@ public class SubjectFragment extends Fragment implements SubjectView {
                 startActivity(i);
             }
         });
+       initTopBar(view);
         return view;
 
     }
+    private void initTopBar(View v) {
+        txt_major = (TextView) v.findViewById(R.id.tv_major);
+        txt_class = (TextView) v.findViewById(R.id.tv_class);
+        txt_year = (TextView) v.findViewById(R.id.tv_year);
 
-    private void initRecycler() {
-        recyler_subjects.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SubjectAdapter(new ArrayList<Subject>());
-        recyler_subjects.setAdapter(adapter);
-
-    }
-
-    private void init() {
         String major = SPrefHelper.getString(getContext(), Constants.MAJOR, "");
         String year = SPrefHelper.getString(getContext(), Constants.YEAR, "");
         String mClass = SPrefHelper.getString(getContext(), Constants.CLASS, "");
@@ -121,6 +117,17 @@ public class SubjectFragment extends Fragment implements SubjectView {
         txt_class.setText(mClass);
         txt_year.setText(year);
         txt_major.setText(major);
+    }
+
+    private void initRecycler() {
+        recyler_subjects.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new SubjectAdapter(new ArrayList<Subject>());
+        recyler_subjects.setAdapter(adapter);
+
+    }
+
+    private void init() {
+
         subjectPresenter = new SubjectPresenterImpl(this);
         subjectPresenter.init();
         DateChangeNotifier.getInstance().addNotifyView(this);
@@ -156,7 +163,9 @@ public class SubjectFragment extends Fragment implements SubjectView {
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
         errorbtn.setVisibility(View.VISIBLE);
-
+        if(!Utils.isNetworkAvailable(getContext())){
+            errotext.setText("No internet Connection Please Try again");
+        }
         errorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,8 +179,12 @@ public class SubjectFragment extends Fragment implements SubjectView {
         Log.e(TAG, "showErrorView: btn hide");
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
+
         errorbtn.setVisibility(View.GONE);
         errorlayout.bringToFront();
         errotext.setText(error);
+        if(!Utils.isNetworkAvailable(getContext())){
+            errotext.setText(error);
+        }
     }
 }

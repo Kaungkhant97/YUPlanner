@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.LauncherActivity;
 import com.kaungkhantthu.yuplanner.MainActivity;
@@ -24,6 +25,7 @@ import com.kaungkhantthu.yuplanner.mvp.eventmvp.presenter.EventPresenterImpl;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
+import com.kaungkhantthu.yuplanner.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +44,9 @@ public class EventFragment extends Fragment implements EventView {
     private FrameLayout errorlayout;
     private LinearLayout pathDirectory;
     private Button errorbtn;
+    private TextView txt_class;
+    private TextView txt_major;
+    private TextView txt_year;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +74,16 @@ public class EventFragment extends Fragment implements EventView {
         errorlayout = (FrameLayout) v.findViewById(R.id.errorLayout);
         pathDirectory =(LinearLayout)v.findViewById(R.id.path_directory);
         errorbtn = (Button) v.findViewById(R.id.btn_error);
+        pathDirectory =(LinearLayout)v.findViewById(R.id.path_directory);
+        pathDirectory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SPrefHelper.putBoolean(getContext(), Constants.FIRSTTIME,true);
+                Intent i =new Intent(getActivity(),LauncherActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
         initRecycler();
         init();
         pathDirectory.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +95,25 @@ public class EventFragment extends Fragment implements EventView {
                 startActivity(i);
             }
         });
+        initTopBar(v);
         return v;
+    }
+    private void initTopBar(View v) {
+        txt_major = (TextView) v.findViewById(R.id.tv_major);
+        txt_class = (TextView) v.findViewById(R.id.tv_class);
+        txt_year = (TextView) v.findViewById(R.id.tv_year);
+
+        String major = SPrefHelper.getString(getContext(), Constants.MAJOR, "");
+        String year = SPrefHelper.getString(getContext(), Constants.YEAR, "");
+        String mClass = SPrefHelper.getString(getContext(), Constants.CLASS, "");
+
+        mClass = Utils.classConverter(mClass, getActivity());
+        year = Utils.yearConverter(year, getActivity());
+
+
+        txt_class.setText(mClass);
+        txt_year.setText(year);
+        txt_major.setText(major);
     }
 
     private void init() {

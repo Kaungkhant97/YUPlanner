@@ -13,6 +13,9 @@ import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Event;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +31,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     public void addallEvents(List<Event> eventArrayList) {
         dataList.addAll(eventArrayList);
+        Collections.sort(dataList, new Comparator<Event>() {
+            @Override
+            public int compare(Event event, Event t1) {
+                Date date1 = event.getFormattedDate();
+                Date date2 = event.getFormattedDate();
+                return date1.after(date2) ? 1 : date1.equals(date2) ? 0 : -1;
+            }
+        });
         notifyDataSetChanged();
     }
 
@@ -57,6 +68,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     public class EventViewHolder extends RecyclerView.ViewHolder {
+        private  TextView txt_eventSpeaker;
         private TextView txt_title, txt_eventTime, txtevent_date;
         private ImageView img_cover;
 
@@ -65,6 +77,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             super(itemView);
             txt_title = (TextView) itemView.findViewById(R.id.txt_eventTitle);
             txt_eventTime = (TextView) itemView.findViewById(R.id.txt_eventTime);
+            txt_eventSpeaker = (TextView) itemView.findViewById(R.id.txt_speaker);
+
             txtevent_date = (TextView) itemView.findViewById(R.id.txt_eventDate);
             img_cover = (ImageView) itemView.findViewById(R.id.img_cover);
         }
@@ -73,6 +87,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             txt_title.setText(e.getTitle() + "");
             txt_eventTime.setText(e.getTime() + "");
             txtevent_date.setText(e.getDate() + "");
+            txt_eventSpeaker.setText(e.getUsername()+"");
 
             Glide.with(c)
                     .load(e.getImgUrl())
