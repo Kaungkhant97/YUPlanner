@@ -33,14 +33,22 @@
                 android:elevation="8dp"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                tools:background="@drawable/uy" />
+                tools:background="@drawable/dummy_photo" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="21">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="20"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_small">
+                android:layout_marginBottom="@dimen/margin_small"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_eventTitle"
@@ -52,7 +60,6 @@
                 <TextView
                     android:id="@+id/txt_speaker"
                     android:layout_width="wrap_content"
-                    android:layout_below="@id/txt_eventTitle"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginLeft="@dimen/margin_medium_2"
@@ -65,7 +72,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/margin_medium"
-                    android:layout_below="@id/txt_speaker"
                     android:paddingBottom="2dp">
 
                     <TextView
@@ -93,15 +99,19 @@
 
                 </LinearLayout>
 
+
+            </LinearLayout>
+
                 <ImageView
                     android:id="@+id/iv_detail"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_chevron_right_black_24dp"/>
-            </RelativeLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
