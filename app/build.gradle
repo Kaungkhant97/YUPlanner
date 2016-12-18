@@ -30,13 +30,13 @@ android {
             minifyEnabled false
             applicationIdSuffix '.debug'
             versionNameSuffix ' - Debug'
-            buildConfigField 'String', 'API_URL', '"ancient-basin-31535.herokuapp.com"';
+            buildConfigField 'String', 'API_URL', API_KEY;
 
         }
         release {
             minifyEnabled true
             debuggable false
-            buildConfigField 'String', 'API_URL', '"ancient-basin-31535.herokuapp.com"';
+            buildConfigField 'String', 'API_URL', API_KEY;
             signingConfig signingConfigs.release
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
