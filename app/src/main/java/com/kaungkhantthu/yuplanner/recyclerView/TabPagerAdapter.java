@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.kaungkhantthu.yuplanner.TodolistFragment;
+import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistFragment;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.views.EventFragment;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectFragment;
 

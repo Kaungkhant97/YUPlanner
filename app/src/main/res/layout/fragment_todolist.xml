@@ -4,7 +4,7 @@
     android:id="@+id/mainCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kaungkhantthu.yuplanner.TodolistFragment">
+    tools:context="com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

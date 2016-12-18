@@ -35,7 +35,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             @Override
             public int compare(Event event, Event t1) {
                 Date date1 = event.getFormattedDate();
-                Date date2 = event.getFormattedDate();
+                Date date2 = t1.getFormattedDate();
                 return date1.after(date2) ? 1 : date1.equals(date2) ? 0 : -1;
             }
         });

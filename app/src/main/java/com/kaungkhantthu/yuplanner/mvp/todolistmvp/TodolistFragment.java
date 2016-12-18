@@ -1,4 +1,4 @@
-package com.kaungkhantthu.yuplanner;
+package com.kaungkhantthu.yuplanner.mvp.todolistmvp;
 
 
 import android.content.Intent;
@@ -15,11 +15,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kaungkhantthu.yuplanner.LauncherActivity;
+import com.kaungkhantthu.yuplanner.MainActivity;
+import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
-import com.kaungkhantthu.yuplanner.mvp.eventmvp.views.EventFragment;
-import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenter;
-import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistPresenterImpl;
-import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistView;
 import com.kaungkhantthu.yuplanner.recyclerView.ToDoAdapter;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;

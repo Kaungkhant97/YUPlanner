@@ -3,7 +3,6 @@ package com.kaungkhantthu.yuplanner.mvp.subjectmvp.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,14 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.LauncherActivity;
-import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
-import com.kaungkhantthu.yuplanner.TodolistFragment;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
-import com.kaungkhantthu.yuplanner.data.entity.Timetable;
-import com.kaungkhantthu.yuplanner.mvp.eventmvp.presenter.EventPresenterImpl;
-import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
-import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectView;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter.SubjectPresenterImpl;
 import com.kaungkhantthu.yuplanner.recyclerView.SubjectAdapter;
 import com.kaungkhantthu.yuplanner.utils.Constants;
@@ -32,14 +25,9 @@ import com.kaungkhantthu.yuplanner.utils.DateChangeNotifier;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
 import com.kaungkhantthu.yuplanner.utils.Utils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Created by kaungkhantthu on 11/29/16.
@@ -163,9 +151,12 @@ public class SubjectFragment extends Fragment implements SubjectView {
         errorlayout.setVisibility(View.VISIBLE);
         recyler_subjects.setVisibility(View.GONE);
         errorbtn.setVisibility(View.VISIBLE);
-        if(!Utils.isNetworkAvailable(getContext())){
-            errotext.setText("No internet Connection Please Try again");
+        if(getContext() != null){
+            if(!Utils.isNetworkAvailable(getContext())){
+                errotext.setText("No internet Connection Please Try again");
+            }
         }
+
         errorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

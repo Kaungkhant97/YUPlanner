@@ -23,6 +23,7 @@ public class TodoTask extends RealmObject {
     private String name;
     private String time;
     private String date;
+    private boolean isAlarmOn;
 
     public String getNote() {
         return note;
@@ -38,13 +39,23 @@ public class TodoTask extends RealmObject {
     public TodoTask() {
     }
 
-    public TodoTask(String name, String time, String date, String note, Date formattedDate, String id) {
+    public boolean isAlarmOn() {
+        return isAlarmOn;
+    }
+
+    public void setAlarmOn(boolean alarmOn) {
+        isAlarmOn = alarmOn;
+    }
+
+    public TodoTask(String name, String time, String date, String note, Date formattedDate, String id, boolean isAlarmOn) {
         this.id = id;
         this.name = name;
         this.time = time;
         this.date = date;
         this.note = note;
         this.formattedDate = formattedDate;
+        this.isAlarmOn = isAlarmOn;
+
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package com.kaungkhantthu.yuplanner;
+package com.kaungkhantthu.yuplanner.mvp.todolistmvp;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistModel;
 import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistModelImpl;
