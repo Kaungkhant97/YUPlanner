@@ -61,15 +61,19 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void setData(List<Event> events) {
+        Calendar c = Calendar.getInstance();
         String[] sMonths = {"JAN","FEB","MAR","APR","MAY","JUNE","JULY","AUGUST","SEP","OCT","NOV","DEC"};
-        int month;
+        int day,month,year;
            if(events != null){
                for(Event event:events){
-                   month = Integer.parseInt(event.getDate().substring(3,5));
+                   c.setTime(event.getFormattedDate());
+                   day = c.get(Calendar.DAY_OF_MONTH);
+                   month = c.get(Calendar.MONTH);
+                   year = c.get(Calendar.YEAR);
                    tvEventTitle.setText(event.getTitle());
-                   tvDay.setText(event.getDate().substring(0,2));
-                   tvMonth.setText(sMonths[month-1]);
-                   tvYear.setText(event.getDate().substring(6,10));
+                   tvDay.setText(day + "");
+                   tvMonth.setText(sMonths[month]);
+                   tvYear.setText(year + "");
                    tvPeriod.setText(event.getTime());
                    tvLocation.setText(event.getPlace());
                    tvDescription.setText(event.getDescription());

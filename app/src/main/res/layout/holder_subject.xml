@@ -55,7 +55,7 @@
 
                 <ImageView
                     android:id="@+id/iv_subject"
-                    android:layout_width="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_moduleno"
                     android:paddingTop="16dp"

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -66,6 +67,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         private TextView tv_period;
         private LinearLayout cardview_layout;
 
+        private ImageView iv_teacher;
+        private ImageView iv_subject;
+        private ImageView iv_period;
+
         public SubjectViewHolder(View itemView) {
             super(itemView);
             cardview_layout = (LinearLayout) itemView.findViewById(R.id.cardview_layout);
@@ -74,6 +79,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             tv_teacher = (TextView) itemView.findViewById(R.id.tv_teacher);
             tv_subject = (TextView) itemView.findViewById(R.id.tv_subject);
             tv_period = (TextView) itemView.findViewById(R.id.tv_period);
+
+            iv_teacher = (ImageView) itemView.findViewById(R.id.iv_teacher);
+            iv_subject = (ImageView) itemView.findViewById(R.id.iv_subject);
+            iv_period = (ImageView) itemView.findViewById(R.id.iv_period);
         }
 
         public void bindData(Subject subjects, Context context, ArrayList<Subject> SubjectList,int position) {
@@ -97,6 +106,23 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
                 tv_period.setText(Utils.periodToTimeCoverter(null, SubjectList.get(position)));
             }else{
                 tv_period.setText(Utils.periodToTimeCoverter(SubjectList.get(position-1),SubjectList.get(position)));
+            }
+
+            //Hide layout with null data
+            if(tv_moduleno.getText().toString().trim().isEmpty()){
+                tv_moduleno.setVisibility(View.GONE);
+            }
+            if(tv_period.getText().toString().trim().isEmpty()){
+                tv_period.setVisibility(View.GONE);
+                iv_period.setVisibility(View.GONE);
+            }
+            if(tv_teacher.getText().toString().trim().isEmpty()){
+                tv_teacher.setVisibility(View.GONE);
+                iv_teacher.setVisibility(View.GONE);
+            }
+            if(tv_subject.getText().toString().trim().isEmpty()){
+                tv_subject.setVisibility(View.GONE);
+                iv_subject.setVisibility(View.GONE);
             }
         }
     }
