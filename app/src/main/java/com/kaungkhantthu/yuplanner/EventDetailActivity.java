@@ -45,6 +45,7 @@ public class EventDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Event");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         init();
         setData(e);

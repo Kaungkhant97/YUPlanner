@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EventDetailActivity"
+            android:name=".EventDetailActivity" android:parentActivityName=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
