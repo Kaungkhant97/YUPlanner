@@ -1,5 +1,6 @@
 package com.kaungkhantthu.yuplanner.mvp.subjectmvp.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -138,6 +139,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
         Log.e(TAG, "showsubjects: ");
         errorlayout.setVisibility(View.GONE);
         recyler_subjects.setVisibility(View.VISIBLE);
+        recyler_subjects.bringToFront();
         adapter.clearSubjects();
         adapter.addallSubjects(subjectList);
 
@@ -163,6 +165,14 @@ public class SubjectFragment extends Fragment implements SubjectView {
                 subjectPresenter.requestsubjects(getContext());
             }
         });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(!Utils.isNetworkAvailable(context)){
+            errotext.setText("No internet Connection Please Try again");
+        }
     }
 
     @Override

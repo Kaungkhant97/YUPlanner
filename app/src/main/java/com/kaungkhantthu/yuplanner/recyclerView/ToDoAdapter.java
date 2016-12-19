@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.TodoTask;
+import com.kaungkhantthu.yuplanner.mvp.todolistmvp.TodolistModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,20 +49,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteToDoTask(dataList.get(position),position);
+                TodolistModelImpl.getInstance().deleteToDoTask(dataList.get(position));
+                dataList.remove(position);
+                notifyItemRemoved(position);
             }
         });
     }
 
-    private void deleteToDoTask(TodoTask todoTask, int position) {
 
-        RealmResults<TodoTask> result = Realm.getDefaultInstance().where(TodoTask.class).equalTo("id",todoTask.getId()).findAll();
-        Realm.getDefaultInstance().beginTransaction();
-        result.deleteAllFromRealm();
-        Realm.getDefaultInstance().commitTransaction();
-        dataList.remove(position);
-        notifyItemRemoved(position);
-    }
 
     public void clearToDoTasks() {
         dataList.clear();

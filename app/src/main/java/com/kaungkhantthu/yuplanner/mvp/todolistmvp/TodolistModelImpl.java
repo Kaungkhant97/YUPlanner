@@ -80,4 +80,13 @@ public class TodolistModelImpl implements TodolistModel {
 
 
     }
+
+    public void deleteToDoTask(TodoTask todoTask) {
+
+        RealmResults<TodoTask> result = Realm.getDefaultInstance().where(TodoTask.class).equalTo("id", todoTask.getId()).findAll();
+        realm.beginTransaction();
+        result.deleteAllFromRealm();
+        realm.commitTransaction();
+
+    }
 }

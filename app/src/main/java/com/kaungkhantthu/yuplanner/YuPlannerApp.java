@@ -1,22 +1,35 @@
 package com.kaungkhantthu.yuplanner;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.stetho.Stetho;
 import com.google.firebase.crash.FirebaseCrash;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
+import io.realm.DynamicRealm;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
+import io.realm.RealmSchema;
 
 /**
  * Created by kaungkhantthu on 12/3/16.
  */
 
 public class YuPlannerApp extends Application {
+    private RealmMigration realmMigration;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
+        setuprealmMigration();
+        RealmConfiguration conf = new RealmConfiguration.Builder()
+                                .schemaVersion(0)
+                                .migration(realmMigration)
+                                .build();
+        Realm.setDefaultConfiguration(conf);
         if(BuildConfig.DEBUG) {
             Stetho.initialize(
                     Stetho.newInitializerBuilder(this)
@@ -36,5 +49,19 @@ public class YuPlannerApp extends Application {
                 }
             });
         }
+    }
+
+
+    private void setuprealmMigration(){
+
+         realmMigration = new RealmMigration() {
+            @Override
+            public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+                RealmSchema schema = realm.getSchema();
+
+                Log.e( "migrate: ","old "+oldVersion+" "+" new"+ newVersion );
+            }
+        };
+
     }
 }
