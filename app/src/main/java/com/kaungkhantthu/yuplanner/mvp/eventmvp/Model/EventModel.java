@@ -6,6 +6,7 @@ import com.kaungkhantthu.yuplanner.data.entity.Event;
 import java.util.Date;
 import java.util.List;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
@@ -24,6 +25,7 @@ public interface EventModel {
     void getEventsFromServerBetween(EventModelImpl.Callback c,Date startDate,Date endDate);
 
 
+    RealmResults<Event> getEvent(String id);
     void clearEvents();
     RealmResults<Event> getAllEventFromCache();
     List<Event> getEventsFor(Date d);

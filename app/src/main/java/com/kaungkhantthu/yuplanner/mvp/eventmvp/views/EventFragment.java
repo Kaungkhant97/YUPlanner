@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kaungkhantthu.yuplanner.EventDetailActivity;
 import com.kaungkhantthu.yuplanner.LauncherActivity;
 import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
@@ -35,7 +36,7 @@ import java.util.List;
  * Created by kaungkhantthu on 11/30/16.
  */
 
-public class EventFragment extends Fragment implements EventView {
+public class EventFragment extends Fragment implements EventView,EventAdapter.cardViewClickListener {
     private static EventFragment eventFragment;
     private RecyclerView recycler_event;
     private ArrayList<Event> eventArrayList;
@@ -84,6 +85,7 @@ public class EventFragment extends Fragment implements EventView {
                 startActivity(i);
             }
         });
+
         initRecycler();
         init();
         pathDirectory.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +128,7 @@ public class EventFragment extends Fragment implements EventView {
         eventArrayList = new ArrayList<>();
         recycler_event.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new EventAdapter(eventArrayList);
+        adapter.setListener(this);
         recycler_event.setAdapter(adapter);
     }
 
@@ -158,5 +161,13 @@ public class EventFragment extends Fragment implements EventView {
                 eventPresenter.requestEvents();
             }
         });
+    }
+
+
+    @Override
+    public void onCardViewClick(String id) {
+        Intent intent = new Intent(getContext(),EventDetailActivity.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
     }
 }

@@ -91,6 +91,15 @@ public class EventModelImpl implements EventModel {
     }
 
     @Override
+    public RealmResults<Event> getEvent(String id) {
+        realm.beginTransaction();
+        RealmResults<Event> result = realm.where(Event.class).equalTo("id",id).findAll();
+        realm.commitTransaction();
+        return result;
+    }
+
+
+    @Override
     public void clearEvents() {
         realm.beginTransaction();
         realm.where(Event.class).findAll().deleteAllFromRealm();

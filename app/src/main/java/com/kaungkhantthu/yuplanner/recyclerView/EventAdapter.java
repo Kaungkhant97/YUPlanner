@@ -1,16 +1,20 @@
 package com.kaungkhantthu.yuplanner.recyclerView;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.data.entity.Event;
+import com.kaungkhantthu.yuplanner.mvp.eventmvp.views.EventView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +28,10 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
     private ArrayList<Event> dataList;
     private Context context;
+
+    private cardViewClickListener listener;
+
+    public void setListener(cardViewClickListener listener){this.listener = listener;}
 
     public EventAdapter(ArrayList<Event> eventArrayList) {
         this.dataList = eventArrayList;
@@ -71,6 +79,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         private  TextView txt_eventSpeaker;
         private TextView txt_title, txt_eventTime, txtevent_date;
         private ImageView img_cover;
+        private CardView cardView;
 
 
         public EventViewHolder(View itemView) {
@@ -78,12 +87,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             txt_title = (TextView) itemView.findViewById(R.id.txt_eventTitle);
             txt_eventTime = (TextView) itemView.findViewById(R.id.txt_eventTime);
             txt_eventSpeaker = (TextView) itemView.findViewById(R.id.txt_speaker);
+            cardView = (CardView) itemView.findViewById(R.id.cardview_layout);
 
             txtevent_date = (TextView) itemView.findViewById(R.id.txt_eventDate);
             img_cover = (ImageView) itemView.findViewById(R.id.img_cover);
         }
 
-        public void bindData(Event e, Context c) {
+        public void bindData(final Event e, final Context c) {
             txt_title.setText(e.getTitle() + "");
             txt_eventTime.setText(e.getTime() + "");
             txtevent_date.setText(e.getDate() + "");
@@ -94,6 +104,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                     .placeholder(R.drawable.dummy_photo)
                     .error(R.drawable.error)
                     .into(img_cover);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onCardViewClick(e.getId());
+                }
+            });
+
         }
+    }
+
+    public interface cardViewClickListener{
+        void onCardViewClick(String id);
     }
 }
