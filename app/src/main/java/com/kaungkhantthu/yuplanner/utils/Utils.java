@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.kaungkhantthu.yuplanner.R;
+import com.kaungkhantthu.yuplanner.YuPlannerApp;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 
 import java.text.ParseException;
@@ -93,7 +94,6 @@ public class Utils {
             majorMap.put(keyYear[i], valueYear[i]);
         }
 
-
     }
 
     public static String classConverter(String mClass, Context c) {
@@ -113,6 +113,33 @@ public class Utils {
 
     }
 
+    public static String[] getSelectedInfoForAPI(int selectedMajor, int selectedYear, int selectedClass){
+        String[] majorarray = YuPlannerApp.getContext().getResources().getStringArray(R.array.mmajor_list);
+        String[] yeararray = YuPlannerApp.getContext().getResources().getStringArray(R.array.myear_list);
+        String[] classarray = YuPlannerApp.getContext().getResources().getStringArray(R.array.mclass_list);
 
+        String yearSelected ;
+        String classSelected ;
+        String majorSelected = majorarray[selectedMajor];
+
+        if(selectedYear == 1){
+            yearSelected = yeararray[selectedYear];
+            classSelected = classarray[selectedClass + 1];
+        }
+        else if(selectedYear == 5){
+            yearSelected = yeararray[3];
+            classSelected = classarray[1];
+        }else if(selectedYear == 6){
+            yearSelected = yeararray[4];
+            classSelected = classarray[1];
+        }else{
+            yearSelected = yeararray[selectedYear];
+            classSelected = classarray[2];
+        }
+        String[] selectedInfo = {majorSelected, yearSelected, classSelected};
+
+        Log.d("YUPlanner", "Utils getSelectedInfo" + selectedInfo[0] + " " + selectedInfo[1] + " " + selectedInfo[2]);
+        return selectedInfo;
+    }
 
 }

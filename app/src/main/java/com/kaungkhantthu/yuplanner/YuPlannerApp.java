@@ -1,6 +1,7 @@
 package com.kaungkhantthu.yuplanner;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
@@ -19,10 +20,13 @@ import io.realm.RealmSchema;
 
 public class YuPlannerApp extends Application {
     private RealmMigration realmMigration;
+    private static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
+
         Realm.init(this);
         setuprealmMigration();
         RealmConfiguration conf = new RealmConfiguration.Builder()
@@ -63,5 +67,9 @@ public class YuPlannerApp extends Application {
             }
         };
 
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

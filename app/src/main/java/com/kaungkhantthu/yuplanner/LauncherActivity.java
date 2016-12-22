@@ -5,7 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
+import com.kaungkhantthu.yuplanner.utils.Utils;
 
 import io.realm.Realm;
 
@@ -50,10 +53,6 @@ public class LauncherActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
         }
 
-
-
-
-
         sp_major = (Spinner) findViewById(R.id.sp_major);
         sp_class = (Spinner) findViewById(R.id.sp_class);
         sp_year = (Spinner) findViewById(R.id.sp_year);
@@ -66,22 +65,20 @@ public class LauncherActivity extends AppCompatActivity {
         txt_btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sp_major.getSelectedItemPosition() == 0 ||
-                        sp_year.getSelectedItemPosition() == 0 ||
-                        sp_class.getSelectedItemPosition() == 0) {
+                int selectedmajor = sp_major.getSelectedItemPosition();
+                int selectedyear = sp_year.getSelectedItemPosition();
+                int selectedclass = sp_class.getSelectedItemPosition();
+
+                if (selectedmajor == 0 ||
+                        selectedyear == 0) {
                     Toast.makeText(LauncherActivity.this, "Please complete the selection to Continue", Toast.LENGTH_SHORT).show();
                 } else {
-                    String[] majorarray = getResources().getStringArray(R.array.mmajor_list);
-                    String[] yeararray = getResources().getStringArray(R.array.myear_list);
-                    String[] classarray = getResources().getStringArray(R.array.mclass_list);
 
-                    int selectedmajor = sp_major.getSelectedItemPosition();
-                    int selectedyear = sp_year.getSelectedItemPosition();
-                    int selectedclass = sp_class.getSelectedItemPosition();
+                    String selectedInfo[] = Utils.getSelectedInfoForAPI(selectedmajor, selectedyear, selectedclass);
 
-                    SPrefHelper.putString(LauncherActivity.this, Constants.MAJOR, majorarray[selectedmajor]);
-                    SPrefHelper.putString(LauncherActivity.this, Constants.CLASS, classarray[selectedclass]);
-                    SPrefHelper.putString(LauncherActivity.this, Constants.YEAR, yeararray[selectedyear]);
+                    SPrefHelper.putString(LauncherActivity.this, Constants.MAJOR, selectedInfo[0]);
+                    SPrefHelper.putString(LauncherActivity.this, Constants.CLASS,selectedInfo[2]);
+                    SPrefHelper.putString(LauncherActivity.this, Constants.YEAR, selectedInfo[1]);
                     SPrefHelper.putBoolean(LauncherActivity.this, Constants.FIRSTTIME, false);
 
                     Realm realm = Realm.getDefaultInstance();
@@ -92,18 +89,9 @@ public class LauncherActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                     startActivity(intent);
-
-
                 }
             }
         });
-    }
-
-    private void setupSpinnerClass() {
-        ArrayAdapter<CharSequence> classAdapter = ArrayAdapter.createFromResource(this,
-                R.array.class_list, android.R.layout.simple_spinner_item);
-        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_class.setAdapter(classAdapter);
     }
 
     private void setupSpinnerMajor() {
@@ -118,6 +106,29 @@ public class LauncherActivity extends AppCompatActivity {
                 R.array.year_list, android.R.layout.simple_spinner_item);
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_year.setAdapter(yearAdapter);
+        sp_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 1){
+                    sp_class.setVisibility(View.VISIBLE);
+                }else{
+                    sp_class.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        sp_class.setVisibility(View.INVISIBLE);
+    }
+
+    private void setupSpinnerClass() {
+        ArrayAdapter<CharSequence> classAdapter = ArrayAdapter.createFromResource(this,
+                R.array.class_list, android.R.layout.simple_spinner_item);
+        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_class.setAdapter(classAdapter);
     }
 
 }

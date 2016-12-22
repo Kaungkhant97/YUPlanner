@@ -87,6 +87,9 @@
         <item>2nd</item>
         <item>3rd</item>
         <item>4th</item>
+        <item>1st (Hons)</item>
+        <item>2nd (Hons)</item>
+        <item>3rd (Hons)</item>
     </string-array>
     <string-array name="myear_list">
         <item>year</item>
@@ -94,13 +97,16 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>dummy</item>
+        <item>dummy</item>
+        <item>dummy</item>
     </string-array>
 
     <string-array name="class_list">]
         <item>class</item>
-        <item>Hons</item>
         <item>Class A</item>
         <item>Class B</item>
+        <item></item>
     </string-array>
     <string-array name="mclass_list">]
         <item>class</item>
