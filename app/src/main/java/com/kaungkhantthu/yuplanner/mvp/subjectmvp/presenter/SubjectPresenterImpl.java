@@ -7,6 +7,7 @@ import com.kaungkhantthu.yuplanner.data.entity.Event;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.data.entity.Timetable;
 import com.kaungkhantthu.yuplanner.data.entity.period;
+import com.kaungkhantthu.yuplanner.data.models.UserInfoModel;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModel;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.View.SubjectView;
@@ -130,9 +131,14 @@ public class SubjectPresenterImpl implements SubjectPresenter {
     }
 
     public void requestsubjects(Context c) {
-        String major = SPrefHelper.getString(c, Constants.MAJOR, "");
+        /*String major = SPrefHelper.getString(c, Constants.MAJOR, "");
         String mClass = SPrefHelper.getString(c, Constants.CLASS, "");
-        String year = SPrefHelper.getString(c, Constants.YEAR, "");
+        String year = SPrefHelper.getString(c, Constants.YEAR, "");*/
+
+        String major = UserInfoModel.getObjInstance().getApiMajor();
+        String mClass = UserInfoModel.getObjInstance().getApiClass();
+        String year = UserInfoModel.getObjInstance().getApiYear();
+
         subjectModel.getSubjectList(major, year, mClass, new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {

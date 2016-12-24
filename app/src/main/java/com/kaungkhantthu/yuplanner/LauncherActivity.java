@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
+import com.kaungkhantthu.yuplanner.data.models.UserInfoModel;
 import com.kaungkhantthu.yuplanner.utils.Constants;
 import com.kaungkhantthu.yuplanner.utils.SPrefHelper;
 import com.kaungkhantthu.yuplanner.utils.Utils;
@@ -73,6 +74,12 @@ public class LauncherActivity extends AppCompatActivity {
                         selectedyear == 0) {
                     Toast.makeText(LauncherActivity.this, "Please complete the selection to Continue", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    SPrefHelper.putInteger(LauncherActivity.this, Constants.MAJOR_POSITION, selectedmajor);
+                    SPrefHelper.putInteger(LauncherActivity.this, Constants.CLASS_POSITION,selectedclass);
+                    SPrefHelper.putInteger(LauncherActivity.this, Constants.YEAR_POSITION, selectedyear);
+
+                    UserInfoModel.deleteObj();
 
                     String selectedInfo[] = Utils.getSelectedInfoForAPI(selectedmajor, selectedyear, selectedclass);
 
