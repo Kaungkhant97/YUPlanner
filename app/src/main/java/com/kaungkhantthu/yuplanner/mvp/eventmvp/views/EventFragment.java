@@ -20,6 +20,7 @@ import com.kaungkhantthu.yuplanner.EventDetailActivity;
 import com.kaungkhantthu.yuplanner.LauncherActivity;
 import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.R;
+import com.kaungkhantthu.yuplanner.data.models.UserInfoModel;
 import com.kaungkhantthu.yuplanner.recyclerView.EventAdapter;
 import com.kaungkhantthu.yuplanner.data.entity.Event;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.presenter.EventPresenterImpl;
@@ -105,12 +106,16 @@ public class EventFragment extends Fragment implements EventView,EventAdapter.ca
         txt_class = (TextView) v.findViewById(R.id.tv_class);
         txt_year = (TextView) v.findViewById(R.id.tv_year);
 
-        String major = SPrefHelper.getString(getContext(), Constants.MAJOR, "");
+        /*String major = SPrefHelper.getString(getContext(), Constants.MAJOR, "");
         String year = SPrefHelper.getString(getContext(), Constants.YEAR, "");
         String mClass = SPrefHelper.getString(getContext(), Constants.CLASS, "");
 
         mClass = Utils.classConverter(mClass, getActivity());
-        year = Utils.yearConverter(year, getActivity());
+        year = Utils.yearConverter(year, getActivity());*/
+
+        String major = UserInfoModel.getObjInstance().getTextMajor();
+        String year = UserInfoModel.getObjInstance().getTextYear();
+        String mClass = UserInfoModel.getObjInstance().getTextClass();
 
 
         txt_class.setText(mClass);

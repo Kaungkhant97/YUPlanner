@@ -2,6 +2,7 @@ package com.kaungkhantthu.yuplanner.data.models;
 
 import android.util.Log;
 
+import com.kaungkhantthu.yuplanner.LauncherActivity;
 import com.kaungkhantthu.yuplanner.R;
 import com.kaungkhantthu.yuplanner.YuPlannerApp;
 import com.kaungkhantthu.yuplanner.utils.Constants;
@@ -15,6 +16,14 @@ import static com.kaungkhantthu.yuplanner.YuPlannerApp.getContext;
 
 public class UserInfoModel {
 
+    private final String API_MAJOR = "api_major";
+    private final String API_YEAR = "api_year";
+    private final String API_CLASS = "api_class";
+
+    private final String DISPLAY_MAJOR = "display_major";
+    private final String DISPLAY_YEAR = "display_year";
+    private final String DISPLAY_CLASS = "display_class";
+
     private static UserInfoModel objInstance;
 
     private String apiMajor;
@@ -25,17 +34,14 @@ public class UserInfoModel {
     private String textYear;
     private String textClass;
 
-    private int userMajor;
-    private int userYear;
-    private int userClass;
-
     private UserInfoModel(){
-        userMajor = SPrefHelper.getInteger(getContext(), Constants.MAJOR_POSITION, 0);
-        userYear = SPrefHelper.getInteger(getContext(), Constants.YEAR_POSITION, 0);
-        userClass = SPrefHelper.getInteger(getContext(), Constants.CLASS_POSITION, 0);
+        apiMajor = SPrefHelper.getString(getContext(), API_MAJOR, "");
+        apiYear = SPrefHelper.getString(getContext(), API_YEAR, "");
+        apiClass = SPrefHelper.getString(getContext(), API_CLASS, "");
 
-        getSelectedInfoForAPI(userMajor, userYear, userClass);
-        getSelectedInfoForDisplay(userMajor, userYear, userClass);
+        textMajor = SPrefHelper.getString(getContext(), DISPLAY_MAJOR, "");
+        textYear = SPrefHelper.getString(getContext(), DISPLAY_YEAR, "");
+        textClass = SPrefHelper.getString(getContext(), DISPLAY_CLASS, "");
     }
 
     public static UserInfoModel getObjInstance(){
@@ -45,6 +51,19 @@ public class UserInfoModel {
 
     public static void deleteObj(){
         if(objInstance != null) objInstance = null;
+    }
+
+    public void asssingToSharePref(int selectedMajor, int selectedYear, int selectedClass){
+        getSelectedInfoForAPI(selectedMajor, selectedYear, selectedClass);
+        getSelectedInfoForDisplay(selectedMajor, selectedYear, selectedClass);
+
+        SPrefHelper.putString(YuPlannerApp.getContext(), API_MAJOR, apiMajor);
+        SPrefHelper.putString(YuPlannerApp.getContext(), API_YEAR, apiYear);
+        SPrefHelper.putString(YuPlannerApp.getContext(), API_CLASS, apiClass);
+
+        SPrefHelper.putString(YuPlannerApp.getContext(), DISPLAY_MAJOR, textMajor);
+        SPrefHelper.putString(YuPlannerApp.getContext(), DISPLAY_YEAR, textYear);
+        SPrefHelper.putString(YuPlannerApp.getContext(), DISPLAY_CLASS, textClass);
     }
 
     private void getSelectedInfoForAPI(int selectedMajor, int selectedYear, int selectedClass){

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.kaungkhantthu.yuplanner.LauncherActivity;
 import com.kaungkhantthu.yuplanner.R;
+import com.kaungkhantthu.yuplanner.YuPlannerApp;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
 import com.kaungkhantthu.yuplanner.data.models.UserInfoModel;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.presenter.SubjectPresenterImpl;
@@ -96,17 +97,9 @@ public class SubjectFragment extends Fragment implements SubjectView {
         txt_class = (TextView) v.findViewById(R.id.tv_class);
         txt_year = (TextView) v.findViewById(R.id.tv_year);
 
-        /*String major = SPrefHelper.getString(getContext(), Constants.MAJOR, "");
-        String year = SPrefHelper.getString(getContext(), Constants.YEAR, "");
-        String mClass = SPrefHelper.getString(getContext(), Constants.CLASS, "");*/
-
         String major = UserInfoModel.getObjInstance().getTextMajor();
         String year = UserInfoModel.getObjInstance().getTextYear();
         String mClass = UserInfoModel.getObjInstance().getTextClass();
-
-        /*mClass = Utils.classConverter(mClass, getActivity());
-        year = Utils.yearConverter(year, getActivity());*/
-
 
         txt_class.setText(mClass);
         txt_year.setText(year);
@@ -189,7 +182,7 @@ public class SubjectFragment extends Fragment implements SubjectView {
         errorbtn.setVisibility(View.GONE);
         errorlayout.bringToFront();
         errotext.setText(error);
-        if(!Utils.isNetworkAvailable(getContext())){
+        if(!Utils.isNetworkAvailable(YuPlannerApp.getContext())){
             errotext.setText(error);
         }
     }

@@ -75,17 +75,9 @@ public class LauncherActivity extends AppCompatActivity {
                     Toast.makeText(LauncherActivity.this, "Please complete the selection to Continue", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    SPrefHelper.putInteger(LauncherActivity.this, Constants.MAJOR_POSITION, selectedmajor);
-                    SPrefHelper.putInteger(LauncherActivity.this, Constants.CLASS_POSITION,selectedclass);
-                    SPrefHelper.putInteger(LauncherActivity.this, Constants.YEAR_POSITION, selectedyear);
-
+                    UserInfoModel.getObjInstance().asssingToSharePref(selectedmajor, selectedyear, selectedclass);
                     UserInfoModel.deleteObj();
 
-                    String selectedInfo[] = Utils.getSelectedInfoForAPI(selectedmajor, selectedyear, selectedclass);
-
-                    SPrefHelper.putString(LauncherActivity.this, Constants.MAJOR, selectedInfo[0]);
-                    SPrefHelper.putString(LauncherActivity.this, Constants.CLASS,selectedInfo[2]);
-                    SPrefHelper.putString(LauncherActivity.this, Constants.YEAR, selectedInfo[1]);
                     SPrefHelper.putBoolean(LauncherActivity.this, Constants.FIRSTTIME, false);
 
                     Realm realm = Realm.getDefaultInstance();
