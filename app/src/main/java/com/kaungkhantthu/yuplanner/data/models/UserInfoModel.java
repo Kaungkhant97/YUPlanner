@@ -42,6 +42,9 @@ public class UserInfoModel {
         textMajor = SPrefHelper.getString(getContext(), DISPLAY_MAJOR, "");
         textYear = SPrefHelper.getString(getContext(), DISPLAY_YEAR, "");
         textClass = SPrefHelper.getString(getContext(), DISPLAY_CLASS, "");
+
+        Log.d("YUPlanner", "UserInfoModel API constructor " + apiMajor + " " + apiYear + " " + apiClass);
+        Log.d("YUPlanner", "UserInfoModel Display constructor " + textMajor + " " + textYear + " " + textClass);
     }
 
     public static UserInfoModel getObjInstance(){
@@ -64,6 +67,8 @@ public class UserInfoModel {
         SPrefHelper.putString(YuPlannerApp.getContext(), DISPLAY_MAJOR, textMajor);
         SPrefHelper.putString(YuPlannerApp.getContext(), DISPLAY_YEAR, textYear);
         SPrefHelper.putString(YuPlannerApp.getContext(), DISPLAY_CLASS, textClass);
+
+        if(objInstance != null) objInstance = null;
     }
 
     private void getSelectedInfoForAPI(int selectedMajor, int selectedYear, int selectedClass){

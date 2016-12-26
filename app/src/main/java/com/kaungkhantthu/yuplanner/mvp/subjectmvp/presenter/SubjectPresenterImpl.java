@@ -139,6 +139,8 @@ public class SubjectPresenterImpl implements SubjectPresenter {
         String mClass = UserInfoModel.getObjInstance().getApiClass();
         String year = UserInfoModel.getObjInstance().getApiYear();
 
+        Log.d("YUPlanner", "SubjectPresenterImpl " + major + " " + year + " " + mClass);
+
         subjectModel.getSubjectList(major, year, mClass, new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {

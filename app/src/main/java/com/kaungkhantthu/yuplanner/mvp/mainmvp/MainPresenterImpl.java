@@ -5,6 +5,7 @@ import android.content.Context;
 import com.kaungkhantthu.yuplanner.MainActivity;
 import com.kaungkhantthu.yuplanner.data.entity.Event;
 import com.kaungkhantthu.yuplanner.data.entity.Subject;
+import com.kaungkhantthu.yuplanner.data.models.UserInfoModel;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModel;
 import com.kaungkhantthu.yuplanner.mvp.eventmvp.Model.EventModelImpl;
 import com.kaungkhantthu.yuplanner.mvp.subjectmvp.Model.SubjectModelImpl;
@@ -74,9 +75,14 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     private void requestSubjectFromServer(final Context c) {
-        String major = SPrefHelper.getString(c, Constants.MAJOR, "");
+        /*String major = SPrefHelper.getString(c, Constants.MAJOR, "");
         String mClass = SPrefHelper.getString(c, Constants.CLASS, "");
-        String year = SPrefHelper.getString(c, Constants.YEAR, "");
+        String year = SPrefHelper.getString(c, Constants.YEAR, "");*/
+
+        String major = UserInfoModel.getObjInstance().getApiMajor();
+        String mClass = UserInfoModel.getObjInstance().getApiClass();
+        String year = UserInfoModel.getObjInstance().getApiYear();
+
         subjectModel.getSubjectList(major, year, mClass, new SubjectModelImpl.Callback() {
             @Override
             public void onSuccess(RealmList<Subject> sbjs) {
